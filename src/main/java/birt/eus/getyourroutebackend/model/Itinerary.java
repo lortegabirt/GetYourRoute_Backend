@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Document("itineraries")
 public class Itinerary {
+
     @Id
     private String id;
     private LocalDateTime beginDate;
