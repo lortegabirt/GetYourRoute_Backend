@@ -1,5 +1,7 @@
 package birt.eus.getyourroutebackend.model;
 
+import birt.eus.getyourroutebackend.validation.UniqueEmail;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -20,8 +22,10 @@ public class User {
   private String lastName;
   @Email
   @NotBlank
+  @UniqueEmail
   private String email;
   @NotBlank
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
 
 }
