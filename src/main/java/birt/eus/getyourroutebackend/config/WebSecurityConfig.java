@@ -2,6 +2,7 @@ package birt.eus.getyourroutebackend.config;
 
 import birt.eus.getyourroutebackend.model.User;
 import birt.eus.getyourroutebackend.repository.UserRepository;
+import birt.eus.getyourroutebackend.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Collections;
 
@@ -24,7 +26,7 @@ public class WebSecurityConfig {
 
   @Bean
   @Profile("!dev")
-  protected SecurityFilterChain appSecurity(HttpSecurity http) throws Exception {
+  protected SecurityFilterChain appSecurity(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
     http.csrf().disable()
       //Each request is treated in isolation
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
@@ -33,6 +35,8 @@ public class WebSecurityConfig {
         request.antMatchers("/api/v0/authentication/**").permitAll();
         request.anyRequest().authenticated();
       }).httpBasic();
+
+    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }
