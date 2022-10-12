@@ -7,20 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import birt.eus.getyourroutebackend.model.User;
-import birt.eus.getyourroutebackend.repository.UserRepository;
+import birt.eus.getyourroutebackend.model.Itinerary;
+import birt.eus.getyourroutebackend.repository.ItineraryRepository;
 
 
 @RestController
-@RequestMapping ("api/users")
-public class UserController  {
+@RequestMapping ("api/itinerarys")
+public class ItineraryController  {
 
 	@Autowired
-	UserRepository userRepository;
+	ItineraryRepository itineraryRepository;
 	
 	@GetMapping({"/",""})
-	public List<User> index() {
-		return userRepository.findAll();
-	}
-	
+	public List <Itinerary> index() {
+		return itineraryRepository.findAll();
+	}	
 }
