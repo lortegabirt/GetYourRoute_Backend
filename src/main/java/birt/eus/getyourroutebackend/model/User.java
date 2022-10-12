@@ -27,5 +27,11 @@ public class User {
   @NotBlank
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
-
+  
+  @Override
+  public String toString() {
+	return "User [id=" + id + ", name=" + name + ", lastName=" + lastName + ", email=" + email + ", password="
+			+ password + "]";
+  }
+  
 }
