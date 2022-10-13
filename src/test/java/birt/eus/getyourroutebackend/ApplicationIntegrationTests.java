@@ -5,6 +5,7 @@ import birt.eus.getyourroutebackend.model.User;
 import birt.eus.getyourroutebackend.repository.ItineraryRepository;
 import birt.eus.getyourroutebackend.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
+@Disabled
 @SpringBootTest
 class ApplicationIntegrationTests {
 
