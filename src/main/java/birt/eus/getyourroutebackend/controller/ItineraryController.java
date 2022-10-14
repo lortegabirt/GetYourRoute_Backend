@@ -1,7 +1,6 @@
 package birt.eus.getyourroutebackend.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,7 +98,7 @@ public class ItineraryController  {
 	 * @param id String
 	 * @return Itinerary 
 	 */
-	@PutMapping("/mod/{id}")
+	@PutMapping("/{id}")
 	@ResponseStatus (HttpStatus.CREATED)
 	public Itinerary update(@RequestBody Itinerary itinerary, @PathVariable("id") String id) {
 		Itinerary tempItinerary = itineraryRepository.findById(id).orElse(null);
