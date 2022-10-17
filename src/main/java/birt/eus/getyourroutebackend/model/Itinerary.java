@@ -20,6 +20,7 @@ public class Itinerary {
     private LocalDateTime endDate;
     private String name;
     private String description;
+    private String idUser;
     @DBRef
     private User user;
 	
@@ -30,12 +31,19 @@ public class Itinerary {
 		this.name = name;
 		this.description = description;
 		this.user = user;
+		this.idUser = user.getId();
 	}
 
 	@Override
 	public String toString() {
 		return "Itinerary [id=" + id + ", beginDate=" + beginDate + ", endDate=" + endDate + ", name=" + name
-				+ ", description=" + description + ", user=" + user + "]";
+				+ ", description=" + description + ", idUser=" + idUser + ", user=" + user + "]";
 	}
     
+	/*
+	public String toStringID() {
+	    return String.format(
+	            "TeamID[uniqueString=%s]",
+	            this.id);
+	}*/
 }
