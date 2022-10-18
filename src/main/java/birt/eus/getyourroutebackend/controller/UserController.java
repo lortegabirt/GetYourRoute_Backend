@@ -69,7 +69,9 @@ public class UserController  {
 	 */
 	@GetMapping("/name/{name}")
 	public List<User> showByName(@PathVariable("name") String reg) {
-		return userRepository.findByName(reg);
+		List<User> listUser = userRepository.findByName(reg);
+		if (listUser == null || listUser.isEmpty()) throw new UserNotFoundException(reg);
+		return listUser;
 	}
 
 	
@@ -102,8 +104,6 @@ public class UserController  {
 		User user = userRepository.findById(id).orElse(null);
 		if (user == null) throw new UserNotFoundException(id);
 		List<Itinerary> listItinerarys = itineraryRepository.findByUser(user);
-		//List<String> listIDsItinerarys = itineraryRepository.findByIdUser(user.getId());
-		log.info("##### listIDsItinerarys [{}]", listItinerarys);
 		for (Itinerary itinerary : listItinerarys) {
 			// Borra los puntos de localizacion del itinerario
 			//String idOnly = GetYourRouteHelper.obtenerID(idItinerary);
@@ -113,21 +113,5 @@ public class UserController  {
 		}
 		// Borra el usuario;
 		//userRepository.deleteById(id);
-		
 	}
-
-	
-	/**
-	 * Borra los puntos de Localización de un itinerario
-	 * 
-	 * @param idItinerary
-	 */
-	/*
-	private void deleteGeoLocationsItinerary(String idItinerary) {
-		List<String> listItinerarysId = geoLocationRepository.findByGeoLocationsIdItinerary(idItinerary);
-		if (listItinerarysId !=null && !listItinerarysId.isEmpty()) {
-			geoLocationRepository.deleteAllById(listItinerarysId);
-		}
-	}
-	*/
 }
