@@ -22,7 +22,7 @@ public class AuthenticationController {
 
   private final AuthenticationService authenticationService;
 
-  @PostMapping("/singup")
+  @PostMapping("/signup")
   @ResponseStatus(HttpStatus.CREATED)
   public void singUp(@RequestBody @Valid User user) {
     authenticationService.registerUser(user);
