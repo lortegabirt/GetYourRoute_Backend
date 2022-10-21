@@ -2,11 +2,12 @@ package birt.eus.getyourroutebackend.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import birt.eus.getyourroutebackend.exceptions.ItineraryNotFoundException;
+import birt.eus.getyourroutebackend.exceptions.UserNotFoundException;
+import birt.eus.getyourroutebackend.helper.GetYourRouteHelper;
+import birt.eus.getyourroutebackend.model.GeoLocation;
 import birt.eus.getyourroutebackend.model.Itinerary;
 import birt.eus.getyourroutebackend.model.User;
+import birt.eus.getyourroutebackend.repository.GeoLocationRepository;
 import birt.eus.getyourroutebackend.repository.ItineraryRepository;
 import birt.eus.getyourroutebackend.repository.UserRepository;
 
@@ -25,15 +31,15 @@ import birt.eus.getyourroutebackend.repository.UserRepository;
 @RestController
 @RequestMapping ("api/v0/itinerarys")
 public class ItineraryController  {
-
-	private static Logger log = LoggerFactory
-		      .getLogger(ItineraryController.class);	
 	  
 	@Autowired
 	ItineraryRepository itineraryRepository;
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	private GeoLocationRepository geoLocationRepository;
 
 	/**
 	 *  Lista todos los itinerarios
@@ -52,7 +58,6 @@ public class ItineraryController  {
 	 */
 	@GetMapping("/id/{id}")
 	public Itinerary showByID(@PathVariable("id") String id) {
-		log.info("### showByID [{}]", id);
 		return itineraryRepository.findById(id).orElse(null);
 	}
 	
@@ -64,7 +69,6 @@ public class ItineraryController  {
 	 */
 	@GetMapping("/name/{name}")
 	public List<Itinerary> showByName(@PathVariable("name") String name) {
-		log.info("### showByName [{}]", name);
 		return itineraryRepository.findByName(name);
 	}
 
@@ -120,6 +124,8 @@ public class ItineraryController  {
 	@DeleteMapping("/{id}")
 	@ResponseStatus (HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable("id") String id) {
+		if (!itineraryRepository.existsById(id)) throw new ItineraryNotFoundException(id);
+		GetYourRouteHelper.deleteGeoLocationsItinerary(geoLocationRepository, id);
 		itineraryRepository.deleteById(id);
 	}
 
@@ -132,10 +138,32 @@ public class ItineraryController  {
 	@ResponseStatus (HttpStatus.NO_CONTENT)
 	public void deleteItinerarysUser(@PathVariable("userid") String userID) {
 		User userFind = userRepository.findById(userID).orElse(null);
+		if (userFind==null) throw new UserNotFoundException(userID);
 		List<Itinerary> listaItinerarios = itineraryRepository.findByUser(userFind);
 		for (Itinerary itinerary : listaItinerarios) {
 			itineraryRepository.deleteById(itinerary.getId());
 		}
 	}
-
+	
+	/*
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Bad Request")
+	@ExceptionHandler(IllegalArgumentException.class)
+	public String handleException (IllegalArgumentException ex) {
+		return ex.getMessage();
+	}
+	*/
+	
+	/**
+	 * Borra los puntos de Localización de un itinerario
+	 * 
+	 * @param idItinerary
+	 */
+	/*
+	private void deleteGeoLocationsItinerary(String idItinerary) {
+		List<String> listItinerarysId = geoLocationRepository.findByGeoLocationsIdItinerary(idItinerary);
+		if (listItinerarysId !=null && !listItinerarysId.isEmpty()) {
+			geoLocationRepository.deleteAllById(listItinerarysId);
+		}
+	}
+	*/
 }
