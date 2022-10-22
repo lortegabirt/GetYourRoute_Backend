@@ -2,12 +2,9 @@ package birt.eus.getyourroutebackend.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import birt.eus.getyourroutebackend.exceptions.ItineraryNotFoundException;
 import birt.eus.getyourroutebackend.exceptions.UserNotFoundException;
 import birt.eus.getyourroutebackend.helper.GetYourRouteHelper;
-import birt.eus.getyourroutebackend.model.GeoLocation;
 import birt.eus.getyourroutebackend.model.Itinerary;
 import birt.eus.getyourroutebackend.model.User;
-import birt.eus.getyourroutebackend.repository.GeoLocationRepository;
 import birt.eus.getyourroutebackend.repository.ItineraryRepository;
 import birt.eus.getyourroutebackend.repository.UserRepository;
 
@@ -39,7 +34,7 @@ public class ItineraryController  {
 	UserRepository userRepository;
 	
 	@Autowired
-	private GeoLocationRepository geoLocationRepository;
+	private GetYourRouteHelper getYourRouteHelper;
 
 	/**
 	 *  Lista todos los itinerarios
@@ -125,7 +120,7 @@ public class ItineraryController  {
 	@ResponseStatus (HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable("id") String id) {
 		if (!itineraryRepository.existsById(id)) throw new ItineraryNotFoundException(id);
-		GetYourRouteHelper.deleteGeoLocationsItinerary(geoLocationRepository, id);
+		getYourRouteHelper.deleteGeoLocationsItinerary(id);
 		itineraryRepository.deleteById(id);
 	}
 
@@ -150,20 +145,6 @@ public class ItineraryController  {
 	@ExceptionHandler(IllegalArgumentException.class)
 	public String handleException (IllegalArgumentException ex) {
 		return ex.getMessage();
-	}
-	*/
-	
-	/**
-	 * Borra los puntos de Localización de un itinerario
-	 * 
-	 * @param idItinerary
-	 */
-	/*
-	private void deleteGeoLocationsItinerary(String idItinerary) {
-		List<String> listItinerarysId = geoLocationRepository.findByGeoLocationsIdItinerary(idItinerary);
-		if (listItinerarysId !=null && !listItinerarysId.isEmpty()) {
-			geoLocationRepository.deleteAllById(listItinerarysId);
-		}
 	}
 	*/
 }

@@ -17,12 +17,10 @@ import birt.eus.getyourroutebackend.exceptions.UserNotFoundException;
 import birt.eus.getyourroutebackend.helper.GetYourRouteHelper;
 import birt.eus.getyourroutebackend.model.Itinerary;
 import birt.eus.getyourroutebackend.model.User;
-import birt.eus.getyourroutebackend.repository.GeoLocationRepository;
 import birt.eus.getyourroutebackend.repository.ItineraryRepository;
 import birt.eus.getyourroutebackend.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+//@Slf4j
 
 @RestController
 @RequestMapping ("api/v0/users")
@@ -35,7 +33,7 @@ public class UserController  {
 	UserRepository userRepository;
 	
 	@Autowired
-	private GeoLocationRepository geoLocationRepository;
+	private GetYourRouteHelper getYourRouteHelper;
 
 	/**
 	 *  Lista todos los usuarios
@@ -106,7 +104,7 @@ public class UserController  {
 		for (Itinerary itinerary : listItinerarys) {
 			// Borra los puntos de localizacion del itinerario
 			//String idOnly = GetYourRouteHelper.obtenerID(idItinerary);
-			GetYourRouteHelper.deleteGeoLocationsItinerary(geoLocationRepository, itinerary.getId());
+			getYourRouteHelper.deleteGeoLocationsItinerary(itinerary.getId());
 			// Borra el itinerario
 			itineraryRepository.deleteById(itinerary.getId());
 		}
