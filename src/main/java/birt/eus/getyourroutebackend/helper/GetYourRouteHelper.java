@@ -4,14 +4,26 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import birt.eus.getyourroutebackend.repository.GeoLocationRepository;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
 
 /**
  * Clase de ayuda con metodos comunes usados en el proyecto.
  * 
  *
  */
+@Component
 public class GetYourRouteHelper {
+	
+	@Autowired
+	private GeoLocationRepository geoLocationRepository;
+
 	
 	/**
 	 * Borra los puntos de Localización de un itinerario
@@ -19,23 +31,25 @@ public class GetYourRouteHelper {
 	 * @param geoLocationRepository GeoLocationRepository
 	 * @param idItinerary String
 	 */
-	public static void deleteGeoLocationsItinerary(GeoLocationRepository geoLocationRepository, String idItinerary) {
+	public void deleteGeoLocationsItinerary(String idItinerary) {
 		List<String> listItinerarysId = geoLocationRepository.findByGeoLocationsIdItinerary(idItinerary);
-		if (listItinerarysId != null && !listItinerarysId.isEmpty()) {
-			geoLocationRepository.deleteAllById(listItinerarysId);
+		log.info("GetYourRouteHelper.deleteGeoLocationsItinerary listItinerarysId [{}]", listItinerarysId);
+		for (String iDItinerary : listItinerarysId) {
+			iDItinerary = obtenerID(iDItinerary);
+			geoLocationRepository.deleteById(iDItinerary);
 		}
 	}
 	
 	/**
-	 * Se pasa un id por ejemplo en este formato: { _id: ObjectId("634c302a02cf00533281b769") }
-	 * y retorna solo el id 634c302a02cf00533281b769
+	 * Se pasa un id por ejemplo en este formato: {"_id": "635431eea4e5a8148801c865"}
+	 * y retorna solo el id 635431eea4e5a8148801c865
 	 * 
 	 * @param id String
 	 * @return String retorna solo el id
 	 */
 	public static String obtenerID(String id) {
 		String idRet;
-		String regExpr = "\".+\"";
+		String regExpr = "\\\"[\\w\\d]{24}\\\"";
 		Pattern pattern = Pattern.compile(regExpr);
 		Matcher matcher = pattern.matcher(id);
 		if (matcher.find()) {
