@@ -1,5 +1,6 @@
 package birt.eus.getyourroutebackend.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,9 @@ public class ItineraryController  {
 	 */
 	@GetMapping({"/",""})
 	public List<Itinerary> index() {
-		return itineraryRepository.findAll();
+		List<Itinerary> listItinerarys = itineraryRepository.findAll();
+		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException();
+		return listItinerarys;
 	}
 
 	/**
@@ -53,8 +56,26 @@ public class ItineraryController  {
 	 */
 	@GetMapping("/id/{id}")
 	public Itinerary showByID(@PathVariable("id") String id) {
-		return itineraryRepository.findById(id).orElse(null);
+		Itinerary itinerary = itineraryRepository.findById(id).orElse(null);
+		if(itinerary == null) throw new ItineraryNotFoundException(id);
+		return itinerary;
 	}
+	
+	/**
+	 * Lista los itinerarios por fecha de inicio y fin
+	 * 
+	 * @param name String
+	 * @return List<Itinerary> 
+	 */
+	@GetMapping("/date")
+	public List<Itinerary> showByDate(@RequestBody Itinerary itinerary) {
+		LocalDateTime beginDate = itinerary.getBeginDate();
+		LocalDateTime endDate = itinerary.getEndDate();
+		List<Itinerary> listItinerarys = itineraryRepository.findByDate(beginDate, endDate);
+		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException(beginDate, endDate);
+		return listItinerarys;
+	}
+	
 	
 	/**
 	 * Lista los itinerarios por nombre
@@ -64,9 +85,26 @@ public class ItineraryController  {
 	 */
 	@GetMapping("/name/{name}")
 	public List<Itinerary> showByName(@PathVariable("name") String name) {
-		return itineraryRepository.findByName(name);
+		List<Itinerary> listItinerarys = itineraryRepository.findByName(name);
+		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException(name);
+		return listItinerarys;
 	}
 
+	/**
+	 * Lista los itinerarios por la expresión regular pasada en name
+	 * 
+	 * @param name String
+	 * @return List<Itinerary> 
+	 */
+	@GetMapping("/nameExpr/{name}")
+	public List<Itinerary> showByNameExpr(@PathVariable("name") String reg) {
+		List<Itinerary> listItinerarys = itineraryRepository.findByNameExpr(reg);
+		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException(reg);
+		return listItinerarys;
+	}
+
+	
+	
 	/**
 	 * Obtiene los itinerarios de un usuario
 	 * 
@@ -76,7 +114,10 @@ public class ItineraryController  {
 	@GetMapping("/userID/{userID}")
 	public List<Itinerary> showByUserID(@PathVariable("userID") String userID) {
 		User userFind = userRepository.findById(userID).orElse(null);
-		return itineraryRepository.findByUser(userFind);
+		if (userFind == null) throw new UserNotFoundException(userID);
+		List<Itinerary> listItinerarys = itineraryRepository.findByUser(userFind);
+		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException(userFind);
+		return listItinerarys;
 	}
 	
 	/**
@@ -101,13 +142,12 @@ public class ItineraryController  {
 	@ResponseStatus (HttpStatus.CREATED)
 	public Itinerary update(@RequestBody Itinerary itinerary, @PathVariable("id") String id) {
 		Itinerary tempItinerary = itineraryRepository.findById(id).orElse(null);
-		
+		if (tempItinerary == null) throw new ItineraryNotFoundException(id);
 		tempItinerary.setName(itinerary.getName());
 		tempItinerary.setDescription(itinerary.getDescription());
 		tempItinerary.setBeginDate(tempItinerary.getBeginDate());
 		tempItinerary.setEndDate(tempItinerary.getEndDate());
 		tempItinerary.setUser(tempItinerary.getUser());
-		
 		return itineraryRepository.save(tempItinerary);
 	}
 	

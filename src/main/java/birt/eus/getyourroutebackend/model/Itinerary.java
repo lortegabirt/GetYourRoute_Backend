@@ -38,12 +38,5 @@ public class Itinerary {
 	public String toString() {
 		return "Itinerary [id=" + id + ", beginDate=" + beginDate + ", endDate=" + endDate + ", name=" + name
 				+ ", description=" + description + ", idUser=" + idUser + ", user=" + user + "]";
-	}
-    
-	/*
-	public String toStringID() {
-	    return String.format(
-	            "TeamID[uniqueString=%s]",
-	            this.id);
-	}*/
+	}    
 }
