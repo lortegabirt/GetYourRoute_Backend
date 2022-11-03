@@ -36,6 +36,7 @@ public class WebSecurityConfig {
       //Endpoint authorization
       .authorizeHttpRequests(request -> {
         request.antMatchers(HttpMethod.OPTIONS).permitAll();
+        request.antMatchers("actuator/**").permitAll();
         request.antMatchers("/api/v0/authentication/**").permitAll();
         request.anyRequest().authenticated();
       }).httpBasic();
