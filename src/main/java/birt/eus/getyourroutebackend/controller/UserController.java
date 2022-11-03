@@ -70,7 +70,6 @@ public class UserController  {
 		if (listUser == null || listUser.isEmpty()) throw new UserNotFoundException(reg);
 		return listUser;
 	}
-
 	
 	/**
 	 * Actuliza un usuario, solo name, lastName y email

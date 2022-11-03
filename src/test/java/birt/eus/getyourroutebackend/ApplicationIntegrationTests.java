@@ -93,7 +93,13 @@ class ApplicationIntegrationTests {
   }
   
   private Itinerary createItinerary(User user, String name, String description) {
-    Itinerary itinerary = new Itinerary(LocalDateTime.now(), LocalDateTime.now(), name, description, user);
+	Random randomHours = new Random();
+	int hours = randomHours.nextInt(36);
+	LocalDateTime begin =  LocalDateTime.now();
+	LocalDateTime end =  LocalDateTime.now();
+	end = end.plusHours(hours);
+	log.info("### createItinerary beginDate: [{}] endDate: [{}]",begin, end);
+	Itinerary itinerary = new Itinerary(begin, end, name, description, user);
     return itinerary;
   }
 
