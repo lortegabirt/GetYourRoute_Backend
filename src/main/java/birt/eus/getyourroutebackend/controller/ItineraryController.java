@@ -26,19 +26,19 @@ import birt.eus.getyourroutebackend.repository.UserRepository;
 @RestController
 @RequestMapping ("api/v0/itinerarys")
 public class ItineraryController  {
-	  
+
 	@Autowired
 	ItineraryRepository itineraryRepository;
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	private GetYourRouteHelper getYourRouteHelper;
 
 	/**
 	 *  Lista todos los itinerarios
-	 *  
+	 *
 	 * @return List<Itinerary>
 	 */
 	@GetMapping({"/",""})
@@ -51,16 +51,16 @@ public class ItineraryController  {
 	 * @param id String
 	 * @return Itinerary
 	 */
-	@GetMapping("/id/{id}")
+	@GetMapping("/{id}")
 	public Itinerary showByID(@PathVariable("id") String id) {
 		return itineraryRepository.findById(id).orElse(null);
 	}
-	
+
 	/**
 	 * Lista los itinerarios por nombre
-	 * 
+	 *
 	 * @param name String
-	 * @return List<Itinerary> 
+	 * @return List<Itinerary>
 	 */
 	@GetMapping("/name/{name}")
 	public List<Itinerary> showByName(@PathVariable("name") String name) {
@@ -69,7 +69,7 @@ public class ItineraryController  {
 
 	/**
 	 * Obtiene los itinerarios de un usuario
-	 * 
+	 *
 	 * @param userID String
 	 * @return List<Itinerary>
 	 */
@@ -78,10 +78,10 @@ public class ItineraryController  {
 		User userFind = userRepository.findById(userID).orElse(null);
 		return itineraryRepository.findByUser(userFind);
 	}
-	
+
 	/**
 	 * Crea un itinerario
-	 * 
+	 *
 	 * @param itinerary Itinerary
 	 * @return Itinerary
 	 */
@@ -92,28 +92,28 @@ public class ItineraryController  {
 	}
 	/**
 	 * Actuliza un itinerario
-	 * 
+	 *
 	 * @param itinerary Itinerary
 	 * @param id String
-	 * @return Itinerary 
+	 * @return Itinerary
 	 */
 	@PutMapping("/{id}")
 	@ResponseStatus (HttpStatus.CREATED)
 	public Itinerary update(@RequestBody Itinerary itinerary, @PathVariable("id") String id) {
 		Itinerary tempItinerary = itineraryRepository.findById(id).orElse(null);
-		
+
 		tempItinerary.setName(itinerary.getName());
 		tempItinerary.setDescription(itinerary.getDescription());
 		tempItinerary.setBeginDate(tempItinerary.getBeginDate());
 		tempItinerary.setEndDate(tempItinerary.getEndDate());
 		tempItinerary.setUser(tempItinerary.getUser());
-		
+
 		return itineraryRepository.save(tempItinerary);
 	}
-	
+
 	/**
 	 * Borra un itinerario
-	 * 
+	 *
 	 * @param id String
 	 */
 	@DeleteMapping("/{id}")
@@ -126,7 +126,7 @@ public class ItineraryController  {
 
 	/**
 	 * Borra los itinerarios de un usuario
-	 * 
+	 *
 	 * @param id String
 	 */
 	@DeleteMapping("/delelteitineraryuser/{userid}")
@@ -139,7 +139,7 @@ public class ItineraryController  {
 			itineraryRepository.deleteById(itinerary.getId());
 		}
 	}
-	
+
 	/*
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Bad Request")
 	@ExceptionHandler(IllegalArgumentException.class)

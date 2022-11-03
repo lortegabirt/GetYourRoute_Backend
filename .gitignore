@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Node ###
+package-lock.json
+package.json
+node_modules
+
+### Misc ###
+geolocations.json
