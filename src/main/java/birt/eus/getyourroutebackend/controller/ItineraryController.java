@@ -2,6 +2,7 @@ package birt.eus.getyourroutebackend.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import birt.eus.getyourroutebackend.exceptions.ItineraryNotFoundException;
+import birt.eus.getyourroutebackend.exceptions.ItineraryNotFoundParameterException;
 import birt.eus.getyourroutebackend.exceptions.UserNotFoundException;
 import birt.eus.getyourroutebackend.helper.GetYourRouteHelper;
 import birt.eus.getyourroutebackend.model.Itinerary;
@@ -75,8 +78,11 @@ public class ItineraryController  {
 	 * @return List<Itinerary>
 	 */
 	
-	@GetMapping("/date/{beginDate}/{endDate}")
-	public List<Itinerary> showByDate(@PathVariable("beginDate") String beginDate, @PathVariable("endDate") String endDate ) {
+	@GetMapping("/date")
+	public List<Itinerary> showByDate(@RequestParam Map<String, String> filters) {
+		String beginDate = filters.get("beginDate");
+		String endDate = filters.get("endDate");
+		if (beginDate==null || "".equals(beginDate) || endDate==null || "".equals(endDate)) { throw new ItineraryNotFoundParameterException("begiDate", "endDate"); }
 		LocalDateTime beginDateLocal = LocalDateTime.parse(beginDate); 
 		LocalDateTime endDateLocal = LocalDateTime.parse(endDate);
 		List<Itinerary> listItinerarys = itineraryRepository.findByBeginDateEndDate(beginDateLocal, endDateLocal);
@@ -84,6 +90,7 @@ public class ItineraryController  {
 		return listItinerarys;
 	}
 
+	
 	/**
 	 * Lista los itinerarios por nombre
 	 * 
