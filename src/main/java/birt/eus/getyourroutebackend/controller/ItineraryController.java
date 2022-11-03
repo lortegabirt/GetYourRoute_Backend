@@ -62,21 +62,28 @@ public class ItineraryController  {
 	}
 	
 	/**
-	 * Lista los itinerarios por fecha de inicio y fin
+	 * Lista los itinerarios buscando por fecha de inicio y fin 
 	 * 
-	 * @param name String
-	 * @return List<Itinerary> 
+	 * Las fechas tienen que tener el formato 
+	 * 	Ejemplos
+	 * 		2022-11-03T04:52:22.999
+	 * 		2022-11-03T13:52:23
+	 * 		2023-12-25T03:00:00.000
+	 *
+	 * @param beginDate String
+	 * @param endDate String
+	 * @return List<Itinerary>
 	 */
-	@GetMapping("/date")
-	public List<Itinerary> showByDate(@RequestBody Itinerary itinerary) {
-		LocalDateTime beginDate = itinerary.getBeginDate();
-		LocalDateTime endDate = itinerary.getEndDate();
-		List<Itinerary> listItinerarys = itineraryRepository.findByDate(beginDate, endDate);
-		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException(beginDate, endDate);
+	
+	@GetMapping("/date/{beginDate}/{endDate}")
+	public List<Itinerary> showByDate(@PathVariable("beginDate") String beginDate, @PathVariable("endDate") String endDate ) {
+		LocalDateTime beginDateLocal = LocalDateTime.parse(beginDate); 
+		LocalDateTime endDateLocal = LocalDateTime.parse(endDate);
+		List<Itinerary> listItinerarys = itineraryRepository.findByBeginDateEndDate(beginDateLocal, endDateLocal);
+		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException(beginDateLocal, endDateLocal);
 		return listItinerarys;
 	}
-	
-	
+
 	/**
 	 * Lista los itinerarios por nombre
 	 * 
