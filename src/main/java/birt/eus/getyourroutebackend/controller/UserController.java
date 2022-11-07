@@ -25,19 +25,19 @@ import birt.eus.getyourroutebackend.repository.UserRepository;
 @RestController
 @RequestMapping ("api/v0/users")
 public class UserController  {
-	  
+
 	@Autowired
 	ItineraryRepository itineraryRepository;
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	private GetYourRouteHelper getYourRouteHelper;
 
 	/**
 	 *  Lista todos los usuarios
-	 *  
+	 *
 	 * @return List<User>
 	 */
 	@GetMapping({"/",""})
@@ -47,7 +47,7 @@ public class UserController  {
 
 	/**
 	 * Psandole un id obtiene el usuario
-	 * 
+	 *
 	 * @param id String
 	 * @return User
 	 */
@@ -57,12 +57,20 @@ public class UserController  {
 		if (user == null) throw new UserNotFoundException(id);
 		return user;
 	}
-	
+
+    /**
+     * Get a user from the email
+     */
+    @GetMapping("/email/{email}")
+    public User getByEmail(@PathVariable("email") String email) {
+      return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
+    }
+
 	/**
 	 * Lista los usuarios por la expresión regular pasada en name
-	 * 
+	 *
 	 * @param name String
-	 * @return List<User> 
+	 * @return List<User>
 	 */
 	@GetMapping("/name/{name}")
 	public List<User> showByName(@PathVariable("name") String reg) {
@@ -70,13 +78,13 @@ public class UserController  {
 		if (listUser == null || listUser.isEmpty()) throw new UserNotFoundException(reg);
 		return listUser;
 	}
-	
+
 	/**
 	 * Actuliza un usuario, solo name, lastName y email
-	 * 
+	 *
 	 * @param itinerary Itinerary
 	 * @param id String
-	 * @return Itinerary 
+	 * @return Itinerary
 	 */
 	@PutMapping("/{id}")
 	@ResponseStatus (HttpStatus.CREATED)
@@ -88,10 +96,10 @@ public class UserController  {
 		tempUser.setEmail(user.getEmail());
 		return userRepository.save(tempUser);
 	}
-	
+
 	/**
 	 * Borra un usuario
-	 * 
+	 *
 	 * @param id String
 	 */
 	@DeleteMapping("/{id}")

@@ -1,6 +1,7 @@
 package birt.eus.getyourroutebackend.controller;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -30,19 +31,19 @@ import birt.eus.getyourroutebackend.repository.UserRepository;
 @RestController
 @RequestMapping ("api/v0/itinerarys")
 public class ItineraryController  {
-	  
+
 	@Autowired
 	ItineraryRepository itineraryRepository;
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	private GetYourRouteHelper getYourRouteHelper;
 
 	/**
 	 *  Lista todos los itinerarios
-	 *  
+	 *
 	 * @return List<Itinerary>
 	 */
 	@GetMapping({"/",""})
@@ -57,17 +58,17 @@ public class ItineraryController  {
 	 * @param id String
 	 * @return Itinerary
 	 */
-	@GetMapping("/id/{id}")
+	@GetMapping("/{id}")
 	public Itinerary showByID(@PathVariable("id") String id) {
 		Itinerary itinerary = itineraryRepository.findById(id).orElse(null);
 		if(itinerary == null) throw new ItineraryNotFoundException(id);
 		return itinerary;
 	}
-	
+
 	/**
-	 * Lista los itinerarios buscando por fecha de inicio y fin 
-	 * 
-	 * Las fechas tienen que tener el formato 
+	 * Lista los itinerarios buscando por fecha de inicio y fin
+	 *
+	 * Las fechas tienen que tener el formato
 	 * 	Ejemplos
 	 * 		2022-11-03T04:52:22.999
 	 * 		2022-11-03T13:52:23
@@ -77,25 +78,25 @@ public class ItineraryController  {
 	 * @param endDate String
 	 * @return List<Itinerary>
 	 */
-	
+
 	@GetMapping("/date")
 	public List<Itinerary> showByDate(@RequestParam Map<String, String> filters) {
 		String beginDate = filters.get("beginDate");
 		String endDate = filters.get("endDate");
 		if (beginDate==null || "".equals(beginDate) || endDate==null || "".equals(endDate)) { throw new ItineraryNotFoundParameterException("begiDate", "endDate"); }
-		LocalDateTime beginDateLocal = LocalDateTime.parse(beginDate); 
+		LocalDateTime beginDateLocal = LocalDateTime.parse(beginDate);
 		LocalDateTime endDateLocal = LocalDateTime.parse(endDate);
 		List<Itinerary> listItinerarys = itineraryRepository.findByBeginDateEndDate(beginDateLocal, endDateLocal);
 		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException(beginDateLocal, endDateLocal);
 		return listItinerarys;
 	}
 
-	
+
 	/**
 	 * Lista los itinerarios por nombre
-	 * 
+	 *
 	 * @param name String
-	 * @return List<Itinerary> 
+	 * @return List<Itinerary>
 	 */
 	@GetMapping("/name/{name}")
 	public List<Itinerary> showByName(@PathVariable("name") String name) {
@@ -106,9 +107,9 @@ public class ItineraryController  {
 
 	/**
 	 * Lista los itinerarios por la expresión regular pasada en name
-	 * 
+	 *
 	 * @param name String
-	 * @return List<Itinerary> 
+	 * @return List<Itinerary>
 	 */
 	@GetMapping("/nameExpr/{name}")
 	public List<Itinerary> showByNameExpr(@PathVariable("name") String reg) {
@@ -117,11 +118,11 @@ public class ItineraryController  {
 		return listItinerarys;
 	}
 
-	
-	
+
+
 	/**
 	 * Obtiene los itinerarios de un usuario
-	 * 
+	 *
 	 * @param userID String
 	 * @return List<Itinerary>
 	 */
@@ -133,10 +134,10 @@ public class ItineraryController  {
 		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException(userFind);
 		return listItinerarys;
 	}
-	
+
 	/**
 	 * Crea un itinerario
-	 * 
+	 *
 	 * @param itinerary Itinerary
 	 * @return Itinerary
 	 */
@@ -147,10 +148,10 @@ public class ItineraryController  {
 	}
 	/**
 	 * Actuliza un itinerario
-	 * 
+	 *
 	 * @param itinerary Itinerary
 	 * @param id String
-	 * @return Itinerary 
+	 * @return Itinerary
 	 */
 	@PutMapping("/{id}")
 	@ResponseStatus (HttpStatus.CREATED)
@@ -164,10 +165,10 @@ public class ItineraryController  {
 		tempItinerary.setUser(tempItinerary.getUser());
 		return itineraryRepository.save(tempItinerary);
 	}
-	
+
 	/**
 	 * Borra un itinerario
-	 * 
+	 *
 	 * @param id String
 	 */
 	@DeleteMapping("/{id}")
@@ -180,7 +181,7 @@ public class ItineraryController  {
 
 	/**
 	 * Borra los itinerarios de un usuario
-	 * 
+	 *
 	 * @param id String
 	 */
 	@DeleteMapping("/delelteitineraryuser/{userid}")
@@ -193,7 +194,7 @@ public class ItineraryController  {
 			itineraryRepository.deleteById(itinerary.getId());
 		}
 	}
-	
+
 	/*
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Bad Request")
 	@ExceptionHandler(IllegalArgumentException.class)
