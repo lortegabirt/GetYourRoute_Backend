@@ -5,7 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import birt.eus.getyourroutebackend.model.dto.ItineraryQueryParams;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,13 +50,18 @@ public class ItineraryController  {
 	 *
 	 * @return List<Itinerary>
 	 */
-	@GetMapping({"/",""})
-	public List<Itinerary> index() {
-		List<Itinerary> listItinerarys = itineraryRepository.findAll();
-		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException();
-		return listItinerarys;
-	}
+//	@GetMapping({"/",""})
+//	public List<Itinerary> index() {
+//		List<Itinerary> listItinerarys = itineraryRepository.findAll();
+//		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException();
+//		return listItinerarys;
+//	}
 
+    @GetMapping({"/",""})
+    public Page<Itinerary> index(@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable,
+      ItineraryQueryParams itineraryQueryParams) {
+      return itineraryRepository.findFiltered(itineraryQueryParams.getQuery(), pageable);
+    }
 	/**
 	 * Psandole un id obtiene el itinerario
 	 * @param id String
