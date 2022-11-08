@@ -1,13 +1,13 @@
 package birt.eus.getyourroutebackend.controller;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,14 +20,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import birt.eus.getyourroutebackend.exceptions.GeoLocationNotFoundException;
+import birt.eus.getyourroutebackend.exceptions.GeoLocationNotFoundParameterException;
 import birt.eus.getyourroutebackend.exceptions.ItineraryNotFoundException;
 import birt.eus.getyourroutebackend.exceptions.ItineraryNotFoundParameterException;
 import birt.eus.getyourroutebackend.exceptions.UserNotFoundException;
 import birt.eus.getyourroutebackend.helper.GetYourRouteHelper;
+import birt.eus.getyourroutebackend.model.GeoLocation;
 import birt.eus.getyourroutebackend.model.Itinerary;
 import birt.eus.getyourroutebackend.model.User;
-import birt.eus.getyourroutebackend.model.dto.ItineraryQueryParams;
-import birt.eus.getyourroutebackend.model.dto.PageItineraryDTO;
+import birt.eus.getyourroutebackend.repository.GeoLocationRepository;
 import birt.eus.getyourroutebackend.repository.ItineraryRepository;
 import birt.eus.getyourroutebackend.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 
 @RestController
-@RequestMapping ("api/v0/itinerarys")
-public class ItineraryController  {
+@RequestMapping ("api/v0/geolocations")
+public class GeoLocationController  {
 	  
 	@Autowired
 	ItineraryRepository itineraryRepository;
@@ -46,46 +48,46 @@ public class ItineraryController  {
 	UserRepository userRepository;
 	
 	@Autowired
+	GeoLocationRepository geoLocationsRepository;
+	
+	@Autowired
 	private GetYourRouteHelper getYourRouteHelper;
 
-	
+	/**
+	 *  Lista todas las localizaciones
+	 *  
+	 * @return Map<String, Object> 
+	 */
 	@GetMapping({"/",""})
-	public PageItineraryDTO index(@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, ItineraryQueryParams itineraryQueryParams) {
-		  Page<Itinerary> pageItinerarys = itineraryRepository.findFiltered(itineraryQueryParams.getQuery(), pageable);	
-		  List<Itinerary> listItinerarys = pageItinerarys.getContent();
-		  if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException();
-		  PageItineraryDTO pageItineraryDTO = getYourRouteHelper.getPageItineraryDTO(pageItinerarys, listItinerarys);
-		  return pageItineraryDTO;
+	public Map<String, Object> index(@RequestParam Map<String, String> filters) {
+		List<GeoLocation> listGeoLocations;
+		Map<String, Object> response = new HashMap<>();
+		Page<GeoLocation> pageLocations = null;
+		Pageable paging = getYourRouteHelper.getRequestParamPageSize(filters);
+		if (paging!=null) {
+			pageLocations = geoLocationsRepository.findAll(paging);
+			listGeoLocations = pageLocations.getContent();
+			if (listGeoLocations == null || listGeoLocations.isEmpty()) throw new GeoLocationNotFoundException();
+			response.put("geolocations", listGeoLocations);
+		    response.put("currentPage", pageLocations.getNumber());
+		    response.put("totalItems", pageLocations.getTotalElements());
+		    response.put("totalPages", pageLocations.getTotalPages());
+		} else {
+			throw new GeoLocationNotFoundParameterException("page","size");
+		}		
+		return response;
 	}
 
 	/**
-	 *  Lista todos los itinerarios
-	 *  
-	 * @return List<Itinerary>
-	 */
-/*	@GetMapping({"/",""})
-	public PageItineraryDTO index(@RequestParam Map<String, String> filters) {
-		List<Itinerary> listItinerarys;
-		Page<Itinerary> pageItinerarys = null;
-		PageItineraryDTO pageItineraryDTO;
-		Pageable paging = getYourRouteHelper.getRequestParamPageSize(filters);
-		pageItinerarys = itineraryRepository.findAll(paging);
-		listItinerarys = pageItinerarys.getContent();
-		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException();
-		pageItineraryDTO = getYourRouteHelper.getPageItineraryDTO(pageItinerarys, listItinerarys);
-		return pageItineraryDTO;
-	}
-*/
-	/**
-	 * Psandole un id obtiene el itinerario
+	 * Psandole un id obtiene la localizacion
 	 * @param id String
-	 * @return Itinerary
+	 * @return GeoLocation
 	 */
 	@GetMapping("/id/{id}")
-	public Itinerary showByID(@PathVariable("id") String id) {
-		Itinerary itinerary = itineraryRepository.findById(id).orElse(null);
-		if(itinerary == null) throw new ItineraryNotFoundException(id);
-		return itinerary;
+	public GeoLocation showByID(@PathVariable("id") String id) {
+		GeoLocation geoLocation = geoLocationsRepository.findById(id).orElse(null);
+		if(geoLocation == null) throw new GeoLocationNotFoundException(id);;
+		return geoLocation;
 	}
 	
 	/**
@@ -103,23 +105,15 @@ public class ItineraryController  {
 	 */
 	
 	@GetMapping("/date")
-	public PageItineraryDTO showByDate(@RequestParam Map<String, String> filters) {
-		Page<Itinerary> pageItinerarys = null;
-		List<Itinerary> listItinerarys;
-		PageItineraryDTO pageItineraryDTO;
+	public List<Itinerary> showByDate(@RequestParam Map<String, String> filters) {
 		String beginDate = filters.get("beginDate");
 		String endDate = filters.get("endDate");
 		if (beginDate==null || "".equals(beginDate) || endDate==null || "".equals(endDate)) { throw new ItineraryNotFoundParameterException("begiDate", "endDate"); }
 		LocalDateTime beginDateLocal = LocalDateTime.parse(beginDate); 
 		LocalDateTime endDateLocal = LocalDateTime.parse(endDate);
-		
-		Pageable paging = getYourRouteHelper.getRequestParamPageSize(filters);
-		pageItinerarys = itineraryRepository.findByBeginDateEndDate(beginDateLocal, endDateLocal, paging);
-		listItinerarys = pageItinerarys.getContent();
+		List<Itinerary> listItinerarys = itineraryRepository.findByBeginDateEndDate(beginDateLocal, endDateLocal);
 		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException(beginDateLocal, endDateLocal);
-		pageItineraryDTO = getYourRouteHelper.getPageItineraryDTO(pageItinerarys, listItinerarys);
-	
-		return pageItineraryDTO;
+		return listItinerarys;
 	}
 
 	
@@ -143,18 +137,12 @@ public class ItineraryController  {
 	 * @return List<Itinerary> 
 	 */
 	@GetMapping("/nameExpr/{name}")
-	public PageItineraryDTO showByNameExpr(@PathVariable("name") String reg, @RequestParam Map<String, String> filters) {
-		Page<Itinerary> pageItinerarys = null;
-		List<Itinerary> listItinerarys;
-		PageItineraryDTO pageItineraryDTO;
-		Pageable paging = getYourRouteHelper.getRequestParamPageSize(filters);
-		pageItinerarys = itineraryRepository.findByNameExpr(reg, paging);
-		listItinerarys = pageItinerarys.getContent();
+	public List<Itinerary> showByNameExpr(@PathVariable("name") String reg) {
+		List<Itinerary> listItinerarys = itineraryRepository.findByNameExpr(reg);
 		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException(reg);
-		pageItineraryDTO = getYourRouteHelper.getPageItineraryDTO(pageItinerarys, listItinerarys);
-		return pageItineraryDTO;
+		return listItinerarys;
 	}
-	
+
 	/**
 	 * Obtiene los itinerarios de un usuario
 	 * 

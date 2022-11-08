@@ -14,6 +14,6 @@ public class UserNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 14545345345345L;
 	
 	public UserNotFoundException(String idUser) {
-		log.info("UserNotFoundException User [{}] noy found", idUser);
+		log.info("UserNotFoundException User [{}] not found", idUser);
 	}
 }

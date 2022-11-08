@@ -1,12 +1,18 @@
 package birt.eus.getyourroutebackend.helper;
 
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import birt.eus.getyourroutebackend.model.Itinerary;
+import birt.eus.getyourroutebackend.model.dto.PageItineraryDTO;
 import birt.eus.getyourroutebackend.repository.GeoLocationRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,6 +66,41 @@ public class GetYourRouteHelper {
 			idRet=id;
 		}
 		return idRet;
+	}
+	
+	/**
+	 * Si se ha puesto los parametros  en la request 'page' y 'size' retorna el objeto Pageable
+	 * en caso contrario null
+	 * 
+	 * @param filters
+	 * @return Pageable or null
+	 */
+	public Pageable getRequestParamPageSize(Map<String, String> filters) {
+		
+		String page = filters.get("page");
+		String size = filters.get("pageSize");
+		
+		if (page==null || size==null || "".equals(page) || "".equals(size)) {
+			return PageRequest.of(0, Integer.MAX_VALUE);
+		} else {
+			return PageRequest.of((Integer.parseInt(page)-1), Integer.parseInt(size));
+		}
+	}
+
+	/**
+	 * Retorna el objeto PageItineraryDTO rellenado con los datos que se le pasan en pageItinerarys y listItinerarys
+	 * 
+	 * @param pageItinerarys Page<Itinerary>
+	 * @param listItinerarys List<Itinerary>
+	 * @return PageItineraryDTO
+	 */
+	public PageItineraryDTO getPageItineraryDTO(Page<Itinerary> pageItinerarys, List<Itinerary> listItinerarys) {
+		PageItineraryDTO pageItineraryDTO = new PageItineraryDTO((pageItinerarys.getNumber()+1), 
+			    pageItinerarys.getNumberOfElements(),
+			    pageItinerarys.getTotalElements(),
+			    pageItinerarys.getTotalPages(),
+			    listItinerarys);
+		return pageItineraryDTO;
 	}
 	
 	public String toStringID(String id) {
