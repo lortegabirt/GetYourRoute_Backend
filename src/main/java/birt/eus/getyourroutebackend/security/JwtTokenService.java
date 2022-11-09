@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,14 +30,19 @@ public class JwtTokenService {
   /**
    * Generates a signed jwt token using the provided secret key and the users email
    *
-   * @param email the authentication's subject email
+   * @param subject the authentication's subject
+   * @param name the authentication subject's name
    * @return raw jwt token
    */
-  public String generateToken(String email) {
+  public String generateToken(String subject, String name) {
     return Jwts.builder()
-      .setSubject(email)
+      .setSubject(subject)
       .signWith(key)
       .setIssuedAt(new Date())
+      .setExpiration(Date.from(LocalDateTime.now()
+        .plus(12, ChronoUnit.HOURS)
+        .atZone(ZoneId.systemDefault()).toInstant()))
+      .addClaims(Map.of("name", name))
       .compact();
   }
 
