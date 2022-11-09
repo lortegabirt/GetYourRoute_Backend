@@ -16,4 +16,12 @@ public class UserNotFoundException extends RuntimeException {
 	public UserNotFoundException(String idUser) {
 		log.info("UserNotFoundException User [{}] not found", idUser);
 	}
+
+	public UserNotFoundException(String valor, String tipo) {
+		log.info("UserNotFoundException [{}] [{}] not found", valor, tipo);
+	}
+
+	public UserNotFoundException() {
+		log.info("UserNotFoundException User not found");
+	}
 }

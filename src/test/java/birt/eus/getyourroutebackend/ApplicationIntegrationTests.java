@@ -1,5 +1,15 @@
 package birt.eus.getyourroutebackend;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Random;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+
 import birt.eus.getyourroutebackend.model.GeoLocation;
 import birt.eus.getyourroutebackend.model.Itinerary;
 import birt.eus.getyourroutebackend.model.User;
@@ -7,17 +17,6 @@ import birt.eus.getyourroutebackend.repository.GeoLocationRepository;
 import birt.eus.getyourroutebackend.repository.ItineraryRepository;
 import birt.eus.getyourroutebackend.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import com.mongodb.client.model.geojson.Point;
-import com.mongodb.client.model.geojson.Position;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Random;
 
 @Slf4j
 @Disabled
@@ -104,13 +103,14 @@ class ApplicationIntegrationTests {
   }
 
   private GeoLocation createGeoLocation(double latitude, double longitude, String itineraryId, String userId) {
-	  Point point1 = createPoint(latitude,longitude);
+	  GeoJsonPoint point1 = createPoint(latitude,longitude);
 	  GeoLocation geoLocation = new GeoLocation(LocalDateTime.now(),itineraryId, userId, point1);
 	  return geoLocation;
   }
   
-  private Point createPoint(double latitude, double longitude) {
-	 Point point1 = new Point(new Position(latitude, longitude));
-	 return point1;
+  private GeoJsonPoint createPoint(double latitude, double longitude) {
+	  GeoJsonPoint geoJsonPoint = new GeoJsonPoint(longitude, longitude);	  
+	  log.info("### createPoint latitude: [{}] longitude: [{}]",latitude, longitude);
+	 return geoJsonPoint;
   }
 }

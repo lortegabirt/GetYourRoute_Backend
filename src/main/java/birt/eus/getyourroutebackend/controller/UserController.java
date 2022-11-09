@@ -3,6 +3,9 @@ package birt.eus.getyourroutebackend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,8 @@ import birt.eus.getyourroutebackend.exceptions.UserNotFoundException;
 import birt.eus.getyourroutebackend.helper.GetYourRouteHelper;
 import birt.eus.getyourroutebackend.model.Itinerary;
 import birt.eus.getyourroutebackend.model.User;
+import birt.eus.getyourroutebackend.model.dto.PageUserDTO;
+import birt.eus.getyourroutebackend.model.dto.UserQueryParams;
 import birt.eus.getyourroutebackend.repository.ItineraryRepository;
 import birt.eus.getyourroutebackend.repository.UserRepository;
 
@@ -41,12 +46,16 @@ public class UserController  {
 	 * @return List<User>
 	 */
 	@GetMapping({"/",""})
-	public List<User> index() {
-		return userRepository.findAll();
+	public PageUserDTO index(@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, UserQueryParams userQueryParams) {
+		  Page<User> pageUsers = userRepository.findFiltered(userQueryParams.getQuery(), pageable);	
+		  List<User> listUsers = pageUsers.getContent();
+		  if (listUsers == null || listUsers.isEmpty()) throw new UserNotFoundException();
+		  PageUserDTO pageUserDTO = getYourRouteHelper.getPageUserDTO(pageUsers, listUsers);
+		  return pageUserDTO;
 	}
-
+	
 	/**
-	 * Psandole un id obtiene el usuario
+	 * Psandole un id obtener el usuario
 	 * 
 	 * @param id String
 	 * @return User
@@ -57,20 +66,20 @@ public class UserController  {
 		if (user == null) throw new UserNotFoundException(id);
 		return user;
 	}
-	
+
 	/**
-	 * Lista los usuarios por la expresión regular pasada en name
+	 * Psandole un mail obtener el usuario
 	 * 
-	 * @param name String
-	 * @return List<User> 
+	 * @param id String
+	 * @return User
 	 */
-	@GetMapping("/name/{name}")
-	public List<User> showByName(@PathVariable("name") String reg) {
-		List<User> listUser = userRepository.findByName(reg);
-		if (listUser == null || listUser.isEmpty()) throw new UserNotFoundException(reg);
-		return listUser;
+	@GetMapping("/email/{email}")
+	public User showByMail(@PathVariable("email") String email) {
+		User user = userRepository.findByEmail(email).orElse(null);
+		if (user == null) throw new UserNotFoundException("email", email);
+		return user;
 	}
-	
+
 	/**
 	 * Actuliza un usuario, solo name, lastName y email
 	 * 

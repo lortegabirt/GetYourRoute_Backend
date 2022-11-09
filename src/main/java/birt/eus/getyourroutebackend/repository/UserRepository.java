@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import birt.eus.getyourroutebackend.model.User;
 
 @Repository
-public interface UserRepository extends MongoRepository<User, String> {
+public interface UserRepository extends MongoRepository<User, String>, UserRepositoryCustom {
   Optional<User> findByEmail(String email);
   boolean existsByEmail(String email);
   

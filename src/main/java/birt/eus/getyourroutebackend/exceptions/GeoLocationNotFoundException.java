@@ -13,10 +13,14 @@ public class GeoLocationNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 1454534535645L;
 	
 	public GeoLocationNotFoundException() {
-		log.info("GeoLocationNotFoundException Gelocation not found");
+		log.info("GeoLocationNotFoundException Geolocation not found");
 	}
 	
 	public GeoLocationNotFoundException(String id) {
-		log.info("GeoLocationNotFoundException Gelocation id [{}] not found", id);
+		log.info("GeoLocationNotFoundException Geolocation id [{}] not found", id);
+	}
+	
+	public GeoLocationNotFoundException(String valor, String tipo) {
+		log.info("GeoLocationNotFoundException [{}] [{}] not found", valor, tipo);
 	}
 }
