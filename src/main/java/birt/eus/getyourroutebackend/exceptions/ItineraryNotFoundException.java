@@ -16,8 +16,8 @@ public class ItineraryNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 14545345345L;
 	
-	public ItineraryNotFoundException(String idUser) {
-		log.info("ItineraryNotFoundException Itinerary [{}] not found", idUser);
+	public ItineraryNotFoundException(String id) {
+		log.info("ItineraryNotFoundException Itinerary [{}] not found", id);
 	}
 	
 	public ItineraryNotFoundException(LocalDateTime beginDate, LocalDateTime endDate) {
@@ -28,8 +28,12 @@ public class ItineraryNotFoundException extends RuntimeException {
 		log.info("ItineraryNotFoundException for User [{}] not found", user);
 	}
 	
-	
 	public ItineraryNotFoundException() {
 		log.info("ItineraryNotFoundException Itinerarys not found");
 	}
+	
+	public ItineraryNotFoundException(String valor, String tipo) {
+		log.info("ItineraryNotFoundException [{}] [{}] not found", valor, tipo);
+	}
+
 }
