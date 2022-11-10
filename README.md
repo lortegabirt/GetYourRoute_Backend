@@ -78,6 +78,36 @@ Pulsa `Ctrl-C` para parar la aplicación
   >http://localhost:8080/api/v0/users/?page=2&size=15&name=nombre
   >
   >http://localhost:8080/api/v0/users/?name=nombreUsuario&lastname=apellidos
+
+ Datos de salida
+  >```json
+  >{
+  >  "currentPage": 1,
+  >  "totalItemsPage": 3,
+  >  "totalPages": 1,
+  >  "totalItems": 3,
+  >  "users": [
+  >      {
+  >          "id": "6346ad5c11e0803c6675d530",
+  >          "name": "lortega",
+  >          "lastName": "lortega",
+  >          "email": "lort@birt.eus"
+  >      },
+  >      {
+  >          "id": "634dd15192a0cc18d740d7fb",
+  >          "name": "Ramiro",
+  >          "lastName": "",
+  >          "email": "rimb@birt.eus"
+  >      },
+  >      {
+  >          "id": "6350291da2891d6129df3bc1",
+  >          "name": "Leticia",
+  >          "lastName": "",
+  >          "email": "leticia@birt.eus"
+  >      }
+  >  ]
+  >}
+  >```
   
  ### Obtener un usuario pasandole un id /id/{id} GET
 
