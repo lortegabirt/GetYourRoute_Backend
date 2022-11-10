@@ -58,7 +58,15 @@ Pulsa `Ctrl-C` para parar la aplicación
 
 ## Servicio de usuarios /api/v0/users
  ### Obtener todos los usuarios / GET
-
+   Datos de entrada como parámetros de la request
+   
+  > | Parámetro | Descripción                      | Obligatorio |
+  > | :--------------- | :--------------- | :--------------- |
+  > | page      | Página a visualizar              | No          |
+  > | name      | Busca por nombre del usuario, se puede especificar una expresión regular  | No    |
+  > | lastname  | Busca por los apellidos del usuario, se puede especificar una expresión regular | No    |
+  > | email     | Busca por el correo del usuario | No    |
+ 
  ### Obtener un usuario pasandole un id /id/{id} GET
 
  ### Obtener un usuario pasandole el mail /email/{email} GET
