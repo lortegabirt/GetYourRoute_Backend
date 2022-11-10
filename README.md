@@ -26,12 +26,12 @@ Pulsa `Ctrl-C` para parar la aplicación
   >    "password":"XXXXXXXXX"
   >}
   >```
-  
+    
   Respuesta
   >ResponseStatus CREATED 201
-
-URL de ejemplo
->http://localhost:8080/api/v0/authentication/singup/
+    
+  URL de ejemplo
+  >http://localhost:8080/api/v0/authentication/singup/
 
 ## Servicio de usuarios /api/v0/users
 
