@@ -101,9 +101,9 @@ Pulsa `Ctrl-C` para parar la aplicación
   >      },
   >      {
   >          "id": "6350291da2891d6129df3bc1",
-  >          "name": "Leticia",
+  >          "name": "Iñaki",
   >          "lastName": "",
-  >          "email": "leticia@birt.eus"
+  >          "email": "inlirt@birt.eus"
   >      }
   >  ]
   >}
