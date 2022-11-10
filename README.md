@@ -15,10 +15,26 @@ Pulsa `Ctrl-C` para parar la aplicación
 - Iñaki Angulo Tarancon
 - Ramiro Iglesias Munitiz
 
-## Servicio de autenticación
+## Servicio de autenticación /api/v0/authentication
+### Registrar usuario /signup
+  Datos de entrada en el body
+  >```json
+  >{
+  >    "name":"nombre usuario",
+  >    "lastName":"apellidos usuario",
+  >    "email":"mail@mail.com",
+  >    "password":"XXXXXXXXX"
+  >}
+  >```
+  
+  Respuesta
+  >ResponseStatus CREATED 201
 
-## Servicio de usuarios
+URL de ejemplo
+>http://localhost:8080/api/v0/authentication/singup/
 
-## Servicio de itinerarios
+## Servicio de usuarios /api/v0/users
 
-## Servicio de localizaciones
+## Servicio de itinerarios /api/v0/itinerarys
+
+## Servicio de localizaciones api/v0/geolocations
