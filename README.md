@@ -67,6 +67,15 @@ Pulsa `Ctrl-C` para parar la aplicación
   > | lastname  | Busca por los apellidos del usuario, se puede especificar una expresión regular | No    |
   > | email     | Busca por el correo del usuario | No    |
  
+ Respuestas
+  >ResponseStatus OK 200 o NotFound 404
+    
+  URLs de ejemplo
+  >http://localhost:8080/api/v0/users/
+  >http://localhost:8080/api/v0/users/?page=1&size=10
+  >http://localhost:8080/api/v0/users/?page=2&size=15&name=nombre
+  >http://localhost:8080/api/v0/users/?name=nombreUsuario&lastname=apellidos
+  
  ### Obtener un usuario pasandole un id /id/{id} GET
 
  ### Obtener un usuario pasandole el mail /email/{email} GET
