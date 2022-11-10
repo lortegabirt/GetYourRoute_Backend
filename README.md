@@ -33,6 +33,28 @@ Pulsa `Ctrl-C` para parar la aplicación
   URL de ejemplo
   >http://localhost:8080/api/v0/authentication/singup/
 
+### Obtener Token de usuario /login
+  Datos de entrada en el body
+  >```json
+  >{
+  >    "email":"mail@mail.com",
+  >    "password":"XXXXXXXXX"
+  >}
+  >```
+    
+  Respuestas
+  >ResponseStatus OK o NotFound 201
+    
+  URL de ejemplo
+  >http://localhost:8080/api/v0/authentication/singup/
+
+  Datos de salida
+  >```json
+  >{
+  >    "token":   "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3J0ZWdhQGJpcnQuZXVzIiwiaWF0IjoxNjY4MDk2MzkwLCJleHAiOjE2NjgxMzk1OTAsIm5hbWUiOiJsb3J0ZWdhIn0.Z35qlb3L0FS1WbNqHyt7UyoDB2qsIgx4_7ei_Ybzyw0"
+  >}
+  >```
+
 ## Servicio de usuarios /api/v0/users
 
 ## Servicio de itinerarios /api/v0/itinerarys
