@@ -16,7 +16,8 @@ Pulsa `Ctrl-C` para parar la aplicación
 - Ramiro Iglesias Munitiz
 
 ## Servicio de autenticación /api/v0/authentication
-### Registrar usuario /signup
+### Registrar usuario /signup POST
+
   Datos de entrada en el body
   >```json
   >{
@@ -33,7 +34,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   URL de ejemplo
   >http://localhost:8080/api/v0/authentication/singup/
 
-### Obtener Token de usuario /login
+### Obtener Token de usuario /login POST
   Datos de entrada en el body
   >```json
   >{
@@ -56,6 +57,15 @@ Pulsa `Ctrl-C` para parar la aplicación
   >```
 
 ## Servicio de usuarios /api/v0/users
+ ### Obtener todos los usuarios / GET
+
+ ### Obtener un usuario pasandole un id /id/{id} GET
+
+ ### Obtener un usuario pasandole el mail /email/{email} GET
+
+ ### Actuliza los datos de un usuario, solo name, lastName y email /{id} PUT
+
+ ### Boora un usuario pasandole su id /{id} DEL
 
 ## Servicio de itinerarios /api/v0/itinerarys
 
