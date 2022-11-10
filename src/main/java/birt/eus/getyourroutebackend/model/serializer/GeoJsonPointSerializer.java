@@ -11,14 +11,10 @@ import java.io.IOException;
 
 public class GeoJsonPointSerializer extends JsonSerializer<GeoJsonPoint> {
     @Override
-    public void serialize(GeoJsonPoint value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+    public void serialize(GeoJsonPoint value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {        
         gen.writeStartObject();
         gen.writeStringField("type", value.getType());
-        gen.writeArrayFieldStart("coordinates");
-        // gen.writeObject(value.getCoordinates());
-        gen.writeObject(value.getX());
-        gen.writeObject(value.getY());
-        gen.writeEndArray();
+        gen.writeObjectField("coordinates", value.getCoordinates());
         gen.writeEndObject();
     }
 }
