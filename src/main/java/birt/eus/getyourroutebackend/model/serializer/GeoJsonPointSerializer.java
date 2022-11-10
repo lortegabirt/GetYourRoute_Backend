@@ -15,7 +15,9 @@ public class GeoJsonPointSerializer extends JsonSerializer<GeoJsonPoint> {
         gen.writeStartObject();
         gen.writeStringField("type", value.getType());
         gen.writeArrayFieldStart("coordinates");
-        gen.writeObject(value.getCoordinates());
+        // gen.writeObject(value.getCoordinates());
+        gen.writeObject(value.getX());
+        gen.writeObject(value.getY());
         gen.writeEndArray();
         gen.writeEndObject();
     }
