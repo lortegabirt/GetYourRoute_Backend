@@ -96,7 +96,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >  "totalItemsPage": 3,
   >  "totalPages": 1,
   >  "totalItems": 3,
-  >  "users": [
+  >  "content": [
   >      {
   >          "id": "6346ad5c11e0803c6675d530",
   >          "name": "lortega",
