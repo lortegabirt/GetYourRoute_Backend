@@ -164,6 +164,33 @@ Pulsa `Ctrl-C` para parar la aplicación
 
  ### Actuliza los datos de un usuario, solo name, lastName y email /{id} PUT
  ---
+  Datos de entrada en el body
+  >```json
+  >{
+  >    "name":"nombre",
+  >    "lastName":"apellidos",
+  >    "email":"mail@mail.com"
+  >}
+  >```
+    
+  Respuesta
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| CREATED        | 201   |
+  >| NotFound       | 401   |
+  
+  URL de ejemplo
+  >http://localhost:8080/api/v0/users/6346b36111e0803c6675d541
+
+Datos de salida
+  >```json
+  >{
+  >  "id": "6346b36111e0803c6675d541",
+  >  "name": "nombre",
+  >  "lastName": "apellidos",
+  >  "email": "mail@mail.com"
+  >}
+  >```
 
  ### Boora un usuario pasandole su id /{id} DEL
  ---
