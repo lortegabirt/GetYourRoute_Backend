@@ -17,9 +17,11 @@ Pulsa `Ctrl-C` para parar la aplicación
 
 ## Servicios de autenticación /api/v0/authentication
 
-### Registrar usuario /signup POST
+### Registrar usuario /signup POST</summary>  
 ---
-  Datos de entrada en el body
+  <details>
+  <summary>Datos de entrada en el body</summary>
+  
   >```json
   >{
   >    "name":"nombre usuario",
@@ -28,40 +30,58 @@ Pulsa `Ctrl-C` para parar la aplicación
   >    "password":"XXXXXXXXX"
   >}
   >```
-    
-  Respuesta
-  >| ResponseStatus | Valor | 
-  >|:-------------- |:----- |
-  >| CREATED        | 201   |
-    
+  
+  </details>
+  
+<details>
+<summary>Respuesta</summary>
+  
+>| ResponseStatus | Valor | 
+>|:-------------- |:----- |
+>| CREATED        | 201   |
+
+</details>
+  
   URL de ejemplo
   >http://localhost:8080/api/v0/authentication/singup/
-
+  
 ### Obtener Token de usuario /login POST
 ---
-  Datos de entrada en el body
+  <details>
+  <summary>Datos de entrada en el body</summary>
+  
   >```json
   >{
   >    "email":"mail@mail.com",
   >    "password":"XXXXXXXXX"
   >}
   >```
-    
-  Respuestas
+  
+  </details>
+  
+  <details>
+  <summary>Respuestas</summary>
+  
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
-    
+  
+  </details>
+  
   URL de ejemplo
   >http://localhost:8080/api/v0/authentication/login/
 
-  Datos de salida
+  <details>
+  <summary>Datos de salida</summary>
+  
   >```json
   >{
   >    "token":   "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3J0ZWdhQGJpcnQuZXVzIiwiaWF0IjoxNjY4MDk2MzkwLCJleHAiOjE2NjgxMzk1OTAsIm5hbWUiOiJsb3J0ZWdhIn0.Z35qlb3L0FS1WbNqHyt7UyoDB2qsIgx4_7ei_Ybzyw0"
   >}
   >```
 
+  </details>
+  
 ## Servicio de usuarios /api/v0/users
  ### Obtener todos los usuarios / GET
  ---
