@@ -128,7 +128,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| OK             | 200   |
   >| NotFound       | 401   |
     
-  URLs de ejemplo
+  URL de ejemplo
   >http://localhost:8080/api/v0/users/id/6346b36111e0803c6675d541
 
  Datos de salida
@@ -143,6 +143,24 @@ Pulsa `Ctrl-C` para parar la aplicación
 
  ### Obtener un usuario pasandole el mail /email/{email} GET
  ---
+ Respuestas
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| OK             | 200   |
+  >| NotFound       | 401   |
+    
+  URL de ejemplo
+  >http://localhost:8080/api/v0/users/email/lort@birt.eus
+
+ Datos de salida
+  >```json
+  >{
+  >  "id": "6346ad5c11e0803c6675d530",
+  >  "name": "lort",
+  >  "lastName": "lorte",
+  >  "email": "lort@birt.eus"
+  >}
+  >```
 
  ### Actuliza los datos de un usuario, solo name, lastName y email /{id} PUT
  ---
