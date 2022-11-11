@@ -192,7 +192,7 @@ Datos de salida
   >}
   >```
 
- ### Boora un usuario pasandole su id /{id} DEL
+ ### Borra un usuario pasandole su id /{id} DEL
  ---
 
 ## Servicio de itinerarios /api/v0/itinerarys
