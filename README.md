@@ -51,10 +51,9 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
-  >| NotFound       | 201   |
     
   URL de ejemplo
-  >http://localhost:8080/api/v0/authentication/singup/
+  >http://localhost:8080/api/v0/authentication/login/
 
   Datos de salida
   >```json
@@ -79,7 +78,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
-  >| NotFound       | 401   |
+  >| NO_CONTENT     | 404   |
     
   URLs de ejemplo
   >http://localhost:8080/api/v0/users/
@@ -126,7 +125,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
-  >| NotFound       | 401   |
+  >| NO_CONTENT     | 404   |
     
   URL de ejemplo
   >http://localhost:8080/api/v0/users/id/6346b36111e0803c6675d541
@@ -147,7 +146,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
-  >| NotFound       | 401   |
+  >| NO_CONTENT     | 404   |
     
   URL de ejemplo
   >http://localhost:8080/api/v0/users/email/lort@birt.eus
@@ -177,7 +176,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| CREATED        | 201   |
-  >| NotFound       | 401   |
+  >| NOT_FOUND      | 404   |
   
   URL de ejemplo
   >http://localhost:8080/api/v0/users/6346b36111e0803c6675d541
@@ -194,7 +193,15 @@ Datos de salida
 
  ### Borra un usuario pasandole su id /{id} DEL
  ---
-
+Respuestas
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| NO_CONTENT     | 204   |
+  >| NOT_FOUND      | 404   |
+    
+  URL de ejemplo
+  >http://localhost:8080/api/v0/users/6346b36111e0803c6675d54
+  
 ## Servicio de itinerarios /api/v0/itinerarys
 
 ## Servicio de localizaciones api/v0/geolocations
