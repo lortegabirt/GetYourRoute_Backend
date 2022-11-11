@@ -2,6 +2,7 @@ package birt.eus.getyourroutebackend.controller;
 
 import java.util.List;
 
+import birt.eus.getyourroutebackend.model.dto.PageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,34 +22,32 @@ import birt.eus.getyourroutebackend.exceptions.GeoLocationNotFoundException;
 import birt.eus.getyourroutebackend.helper.GetYourRouteHelper;
 import birt.eus.getyourroutebackend.model.GeoLocation;
 import birt.eus.getyourroutebackend.model.dto.GeoLocationQueryParams;
-import birt.eus.getyourroutebackend.model.dto.PageGeoLocationDTO;
 import birt.eus.getyourroutebackend.repository.GeoLocationRepository;
 
 
 @RestController
 @RequestMapping ("api/v0/geolocations")
 public class GeoLocationController  {
-	
+
 	@Autowired
 	GeoLocationRepository geoLocationsRepository;
-	
+
 	@Autowired
 	private GetYourRouteHelper getYourRouteHelper;
 
 	/**
 	 *  Lista todas las localizaciones, buscando por estos filtros
-	 *  
+	 *
 	 *  beginDate endDate, itineraryId, userId
-	 *  
+	 *
 	 * @return PageGeoLocationDTO
 	 */
 	@GetMapping({"/",""})
-	public PageGeoLocationDTO index(@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, GeoLocationQueryParams geoLocationQueryParams) {
-		Page<GeoLocation> pageGeoLocations = geoLocationsRepository.findFiltered(geoLocationQueryParams.getQuery(), pageable);	
+	public PageDto<GeoLocation> index(@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, GeoLocationQueryParams geoLocationQueryParams) {
+		Page<GeoLocation> pageGeoLocations = geoLocationsRepository.findFiltered(geoLocationQueryParams.getQuery(), pageable);
 		List<GeoLocation> listGeoLocations = pageGeoLocations.getContent();
 		if (listGeoLocations == null || listGeoLocations.isEmpty()) throw new GeoLocationNotFoundException();
-		PageGeoLocationDTO pageGeoLocationDTO = getYourRouteHelper.getPageGeoLocationDTO(pageGeoLocations, listGeoLocations);
-		return pageGeoLocationDTO;
+		return new PageDto<>(pageGeoLocations);
 	}
 
 	/**
@@ -65,7 +64,7 @@ public class GeoLocationController  {
 
 	/**
 	 * Obtiene las localizaciones de un usuario
-	 * 
+	 *
 	 * @param userID String
 	 * @return List<GeoLocation>
 	 */
@@ -75,11 +74,11 @@ public class GeoLocationController  {
 		if (listGeoLocations == null || listGeoLocations.isEmpty()) throw new GeoLocationNotFoundException("userID", userID);
 		return listGeoLocations;
 	}
-	
+
 
 	/**
 	 * Obtiene las localizaciones de un itinerario
-	 * 
+	 *
 	 * @param itineraryID String
 	 * @return List<GeoLocation>
 	 */
@@ -89,10 +88,10 @@ public class GeoLocationController  {
 		if (listGeoLocations == null || listGeoLocations.isEmpty()) throw new GeoLocationNotFoundException("itineraryID", itineraryID);
 		return listGeoLocations;
 	}
-	
+
 	/**
 	 * Crea una localizacion
-	 * 
+	 *
 	 * @param itinerary Itinerary
 	 * @return Itinerary
 	 */
@@ -101,13 +100,13 @@ public class GeoLocationController  {
 	public GeoLocation create(@RequestBody GeoLocation geoLocation) {
 		return geoLocationsRepository.save(geoLocation);
 	}
-	
+
 	/**
 	 * Actuliza una localizacion
-	 * 
+	 *
 	 * @param itinerary Itinerary
 	 * @param id String
-	 * @return Itinerary 
+	 * @return Itinerary
 	 */
 	@PutMapping("/{id}")
 	@ResponseStatus (HttpStatus.CREATED)
@@ -120,10 +119,10 @@ public class GeoLocationController  {
 		tempGeoLocation.setLocation(geoLocation.getLocation());
 		return geoLocationsRepository.save(tempGeoLocation);
 	}
-	
+
 	/**
 	 * Borra una localizacion
-	 * 
+	 *
 	 * @param id String
 	 */
 	@DeleteMapping("/{id}")

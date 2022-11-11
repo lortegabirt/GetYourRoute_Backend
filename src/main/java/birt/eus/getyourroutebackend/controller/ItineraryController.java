@@ -2,6 +2,7 @@ package birt.eus.getyourroutebackend.controller;
 
 import java.util.List;
 
+import birt.eus.getyourroutebackend.model.dto.PageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,6 @@ import birt.eus.getyourroutebackend.helper.GetYourRouteHelper;
 import birt.eus.getyourroutebackend.model.Itinerary;
 import birt.eus.getyourroutebackend.model.User;
 import birt.eus.getyourroutebackend.model.dto.ItineraryQueryParams;
-import birt.eus.getyourroutebackend.model.dto.PageItineraryDTO;
 import birt.eus.getyourroutebackend.repository.ItineraryRepository;
 import birt.eus.getyourroutebackend.repository.UserRepository;
 
@@ -31,37 +31,36 @@ import birt.eus.getyourroutebackend.repository.UserRepository;
 @RestController
 @RequestMapping ("api/v0/itinerarys")
 public class ItineraryController  {
-	  
+
 	@Autowired
 	ItineraryRepository itineraryRepository;
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	private GetYourRouteHelper getYourRouteHelper;
 
-	
+
 	/**
 	 *  Lista todos los itinerarios, buscando por estos filtros
-	 *  
-	 *  'userId', 'beginDate', 'endDate', 'name' expresion regular 
-	 *  
+	 *
+	 *  'userId', 'beginDate', 'endDate', 'name' expresion regular
+	 *
 	 * @return PageItineraryDTO
 	 */
 	@GetMapping({"/",""})
-	public PageItineraryDTO index(@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, ItineraryQueryParams itineraryQueryParams) {
-		Page<Itinerary> pageItinerarys = itineraryRepository.findFiltered(itineraryQueryParams.getQuery(), pageable);	
+	public PageDto<Itinerary> index(@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, ItineraryQueryParams itineraryQueryParams) {
+		Page<Itinerary> pageItinerarys = itineraryRepository.findFiltered(itineraryQueryParams.getQuery(), pageable);
 		List<Itinerary> listItinerarys = pageItinerarys.getContent();
 		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException();
-		PageItineraryDTO pageItineraryDTO = getYourRouteHelper.getPageItineraryDTO(pageItinerarys, listItinerarys);
-		return pageItineraryDTO;
+		return new PageDto<>(pageItinerarys);
 	}
 
 
 	/**
 	 * Pasandole un id obtiene el itinerario
-	 * 
+	 *
 	 * @param id String
 	 * @return Itinerary
 	 */
@@ -73,8 +72,8 @@ public class ItineraryController  {
 	}
 
 	/**
-	 * Obtener los itinerario de un usuario 
-	 * 
+	 * Obtener los itinerario de un usuario
+	 *
 	 * @param id String
 	 * @return Itinerary
 	 */
@@ -84,12 +83,12 @@ public class ItineraryController  {
 		if(listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException("userID", userID);
 		return listItinerarys;
 	}
-	
+
 	/**
 	 * Lista los itinerarios por nombre
-	 * 
+	 *
 	 * @param name String
-	 * @return List<Itinerary> 
+	 * @return List<Itinerary>
 	 */
 	@GetMapping("/name/{name}")
 	public List<Itinerary> showByName(@PathVariable("name") String name) {
@@ -100,7 +99,7 @@ public class ItineraryController  {
 
 	/**
 	 * Crea un itinerario
-	 * 
+	 *
 	 * @param itinerary Itinerary
 	 * @return Itinerary
 	 */
@@ -111,10 +110,10 @@ public class ItineraryController  {
 	}
 	/**
 	 * Actuliza un itinerario
-	 * 
+	 *
 	 * @param itinerary Itinerary
 	 * @param id String
-	 * @return Itinerary 
+	 * @return Itinerary
 	 */
 	@PutMapping("/{id}")
 	@ResponseStatus (HttpStatus.CREATED)
@@ -128,10 +127,10 @@ public class ItineraryController  {
 		tempItinerary.setUser(tempItinerary.getUser());
 		return itineraryRepository.save(tempItinerary);
 	}
-	
+
 	/**
 	 * Borra un itinerario
-	 * 
+	 *
 	 * @param id String
 	 */
 	@DeleteMapping("/{id}")
@@ -144,7 +143,7 @@ public class ItineraryController  {
 
 	/**
 	 * Borra los itinerarios de un usuario
-	 * 
+	 *
 	 * @param id String
 	 */
 	@DeleteMapping("/delelteitineraryuser/{userid}")
