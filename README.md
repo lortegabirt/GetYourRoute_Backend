@@ -38,6 +38,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >http://localhost:8080/api/v0/authentication/singup/
 
 ### Obtener Token de usuario /login POST
+---
   Datos de entrada en el body
   >```json
   >{
@@ -47,7 +48,10 @@ Pulsa `Ctrl-C` para parar la aplicación
   >```
     
   Respuestas
-  >ResponseStatus OK o NotFound 201
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| OK             | 200   |
+  >| NotFound       | 201   |
     
   URL de ejemplo
   >http://localhost:8080/api/v0/authentication/singup/
@@ -61,17 +65,21 @@ Pulsa `Ctrl-C` para parar la aplicación
 
 ## Servicio de usuarios /api/v0/users
  ### Obtener todos los usuarios / GET
+ ---
    Datos de entrada como parámetros de la request
    
   > | Parámetro | Descripción                      | Obligatorio |
   > | :--------------- | :--------------- | :--------------- |
-  > | page      | Página a visualizar              | No          |
+  > | page      | Página a visualizar            | No          |
   > | name      | Busca por nombre del usuario, se puede especificar una expresión regular  | No    |
   > | lastname  | Busca por los apellidos del usuario, se puede especificar una expresión regular | No    |
   > | email     | Busca por el correo del usuario | No    |
  
  Respuestas
-  >ResponseStatus OK 200 o NotFound 404
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| OK             | 200   |
+  >| NotFound       | 401   |
     
   URLs de ejemplo
   >http://localhost:8080/api/v0/users/
@@ -113,12 +121,34 @@ Pulsa `Ctrl-C` para parar la aplicación
   >```
   
  ### Obtener un usuario pasandole un id /id/{id} GET
+ ---
+ Respuestas
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| OK             | 200   |
+  >| NotFound       | 401   |
+    
+  URLs de ejemplo
+  >http://localhost:8080/api/v0/users/id/6346b36111e0803c6675d541
+
+ Datos de salida
+  >```json
+  >{
+  >  "id": "6346ad5c11e0803c6675d530",
+  >  "name": "lort",
+  >  "lastName": "lorte",
+  >  "email": "lort@birt.eus"
+  >}
+  >```
 
  ### Obtener un usuario pasandole el mail /email/{email} GET
+ ---
 
  ### Actuliza los datos de un usuario, solo name, lastName y email /{id} PUT
+ ---
 
  ### Boora un usuario pasandole su id /{id} DEL
+ ---
 
 ## Servicio de itinerarios /api/v0/itinerarys
 
