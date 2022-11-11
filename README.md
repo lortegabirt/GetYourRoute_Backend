@@ -15,9 +15,10 @@ Pulsa `Ctrl-C` para parar la aplicación
 - Iñaki Angulo Tarancon
 - Ramiro Iglesias Munitiz
 
-## Servicio de autenticación /api/v0/authentication
-### Registrar usuario /signup POST
+## Servicios de autenticación /api/v0/authentication
 
+### Registrar usuario /signup POST
+---
   Datos de entrada en el body
   >```json
   >{
@@ -29,7 +30,9 @@ Pulsa `Ctrl-C` para parar la aplicación
   >```
     
   Respuesta
-  >ResponseStatus CREATED 201
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| CREATED        | 201   |
     
   URL de ejemplo
   >http://localhost:8080/api/v0/authentication/singup/
