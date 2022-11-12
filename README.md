@@ -85,7 +85,8 @@ Pulsa `Ctrl-C` para parar la aplicación
 ## Servicio de usuarios /api/v0/users
  ### Obtener todos los usuarios / GET
  ---
-   Datos de entrada como parámetros de la request
+  <details>
+  <summary>Datos de entrada como parámetros de la request</summary>
    
   > | Parámetro | Descripción                      | Obligatorio |
   > | :--------------- | :--------------- | :--------------- |
@@ -94,12 +95,19 @@ Pulsa `Ctrl-C` para parar la aplicación
   > | lastname  | Busca por los apellidos del usuario, se puede especificar una expresión regular | No    |
   > | email     | Busca por el correo del usuario | No    |
  
- Respuestas
+</details>
+
+<details>
+  
+  <summary>Respuestas</summary>
+  
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
   >| NO_CONTENT     | 404   |
-    
+  
+  </details>
+  
   URLs de ejemplo
   >http://localhost:8080/api/v0/users/
   >
@@ -109,7 +117,10 @@ Pulsa `Ctrl-C` para parar la aplicación
   >
   >http://localhost:8080/api/v0/users/?name=nombreUsuario&lastname=apellidos
 
- Datos de salida
+<details>
+  
+  <summary>Datos de salida</summary>
+  
   >```json
   >{
   >  "currentPage": 1,
@@ -139,18 +150,27 @@ Pulsa `Ctrl-C` para parar la aplicación
   >}
   >```
   
+  </details>
+  
  ### Obtener un usuario pasandole un id /id/{id} GET
  ---
- Respuestas
+ 
+ <details>
+  <summary>Respuestas</summary>
+  
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
   >| NO_CONTENT     | 404   |
-    
+  
+  </details>
+  
   URL de ejemplo
   >http://localhost:8080/api/v0/users/id/6346b36111e0803c6675d541
 
- Datos de salida
+<details>
+  <summary>Datos de salida</summary>
+
   >```json
   >{
   >  "id": "6346ad5c11e0803c6675d530",
@@ -160,18 +180,25 @@ Pulsa `Ctrl-C` para parar la aplicación
   >}
   >```
 
+</details>
  ### Obtener un usuario pasandole el mail /email/{email} GET
  ---
- Respuestas
+ <details>
+  <summary>Respuestas</summary>
+  
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
   >| NO_CONTENT     | 404   |
-    
+  
+  </details>
+  
   URL de ejemplo
   >http://localhost:8080/api/v0/users/email/lort@birt.eus
 
- Datos de salida
+<details>
+  <summary>Datos de salida</summary>
+  
   >```json
   >{
   >  "id": "6346ad5c11e0803c6675d530",
@@ -181,9 +208,14 @@ Pulsa `Ctrl-C` para parar la aplicación
   >}
   >```
 
+  </details>
+  
  ### Actuliza los datos de un usuario, solo name, lastName y email /{id} PUT
  ---
-  Datos de entrada en el body
+  
+  <details>
+  <summary>Datos de entrada en el body</summary>
+  
   >```json
   >{
   >    "name":"nombre",
@@ -191,17 +223,25 @@ Pulsa `Ctrl-C` para parar la aplicación
   >    "email":"mail@mail.com"
   >}
   >```
-    
-  Respuesta
+  
+  </details>
+  
+  <details>
+  <summary>Respuesta</summary>
+  
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| CREATED        | 201   |
   >| NOT_FOUND      | 404   |
   
+  </details>
+  
   URL de ejemplo
   >http://localhost:8080/api/v0/users/6346b36111e0803c6675d541
 
-Datos de salida
+<details>
+  <summary>Datos de salida</summary>
+  
   >```json
   >{
   >  "id": "6346b36111e0803c6675d541",
@@ -211,14 +251,21 @@ Datos de salida
   >}
   >```
 
+ </details> 
+  
  ### Borra un usuario pasandole su id /{id} DEL
  ---
-Respuestas
+ 
+<details>
+  <summary>Respuestas</summary>
+  
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| NO_CONTENT     | 204   |
   >| NOT_FOUND      | 404   |
-    
+  
+  </details>
+  
   URL de ejemplo
   >http://localhost:8080/api/v0/users/6346b36111e0803c6675d54
   
