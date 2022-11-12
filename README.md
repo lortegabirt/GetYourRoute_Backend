@@ -179,6 +179,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >```
 
 </details>
+
  ### Obtener un usuario pasandole el mail /email/{email} GET
  ---
  <details>
@@ -189,7 +190,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| OK             | 200   |
   >| NO_CONTENT     | 404   |
   
-  </details>
+ </details>
   
   URL de ejemplo
   >http://localhost:8080/api/v0/users/email/lort@birt.eus
