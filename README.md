@@ -95,18 +95,17 @@ Pulsa `Ctrl-C` para parar la aplicación
   > | lastname  | Busca por los apellidos del usuario, se puede especificar una expresión regular | No    |
   > | email     | Busca por el correo del usuario | No    |
  
-</details>
+ </details>
 
-<details>
-  
+<details> 
   <summary>Respuestas</summary>
   
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
   >| NO_CONTENT     | 404   |
-  
-  </details>
+
+</details>
   
   URLs de ejemplo
   >http://localhost:8080/api/v0/users/
@@ -117,8 +116,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >
   >http://localhost:8080/api/v0/users/?name=nombreUsuario&lastname=apellidos
 
-<details>
-  
+<details>  
   <summary>Datos de salida</summary>
   
   >```json
@@ -163,7 +161,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| OK             | 200   |
   >| NO_CONTENT     | 404   |
   
-  </details>
+ </details>
   
   URL de ejemplo
   >http://localhost:8080/api/v0/users/id/6346b36111e0803c6675d541
@@ -208,12 +206,12 @@ Pulsa `Ctrl-C` para parar la aplicación
   >}
   >```
 
-  </details>
+</details>
   
  ### Actuliza los datos de un usuario, solo name, lastName y email /{id} PUT
  ---
   
-  <details>
+ <details>
   <summary>Datos de entrada en el body</summary>
   
   >```json
@@ -224,9 +222,9 @@ Pulsa `Ctrl-C` para parar la aplicación
   >}
   >```
   
-  </details>
+ </details>
   
-  <details>
+ <details>
   <summary>Respuesta</summary>
   
   >| ResponseStatus | Valor | 
@@ -264,7 +262,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| NO_CONTENT     | 204   |
   >| NOT_FOUND      | 404   |
   
-  </details>
+</details>
   
   URL de ejemplo
   >http://localhost:8080/api/v0/users/6346b36111e0803c6675d54
