@@ -349,4 +349,18 @@ URLs de ejemplo
   
   </details>
 
+### Obtener un itinerario pasandole un id /id/{id} GET
+
+### Obtener los itinerarios de un usuario, pasando el id del usuario /id/{id} GET
+
+### Obtener los itinerarios por nombre,  /mane/{name} GET
+
+### Crea un itinerario / POST
+
+### Actuliza un itinerario pasandole un id /{id} PUT
+
+### Borra un itinerario pasandole un id /{id} DELETE
+
+### Borra los itinerarios de un suarios pasandole el id de usuaruio /delelteitineraryuser/{userid} DELETE
+
 ## Servicio de localizaciones api/v0/geolocations
