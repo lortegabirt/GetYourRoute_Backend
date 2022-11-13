@@ -351,6 +351,39 @@ URLs de ejemplo
 
 ### Obtener un itinerario pasandole un id /id/{id} GET
 
+ <details>
+  <summary>Respuestas</summary>
+  
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| OK             | 200   |
+  >| NO_CONTENT     | 404   |
+  
+ </details>
+  
+  URL de ejemplo
+  >http://localhost:8080/api/v0/itinerarys/id/634956123825654bfcb165ab
+
+<details>
+  <summary>Datos de salida</summary>
+  
+  >```json
+  >{
+  >   "id": "634956123825654bfcb165ab",
+  >  "beginDate": "2022-10-14T14:29:06.612",
+  >  "endDate": "2022-10-14T14:29:06.613",
+  >  "name": "Itinerario",
+  >  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  >  "idUser": "6346ad5c11e0803c6675d530",
+  >  "user": {
+  >      "id": "6346ad5c11e0803c6675d530",
+  >      "name": "lort",
+  >      "lastName": "lort",
+  >      "email": "lort@birt.eus"
+  >  }
+  >}
+  >```
+
 ### Obtener los itinerarios de un usuario, pasando el id del usuario /id/{id} GET
 
 ### Obtener los itinerarios por nombre,  /mane/{name} GET
