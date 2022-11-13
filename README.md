@@ -383,7 +383,9 @@ URLs de ejemplo
   >  }
   >}
   >```
-
+  
+ </details>
+ 
 ### Obtener los itinerarios de un usuario, pasando el id del usuario /id/{id} GET
 
  <details>
@@ -421,6 +423,7 @@ URLs de ejemplo
   >]
   >```
   
+ </details>
 ### Obtener los itinerarios por nombre,  /mane/{name} GET
 
    <details>
