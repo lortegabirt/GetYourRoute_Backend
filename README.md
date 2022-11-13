@@ -456,7 +456,8 @@ URLs de ejemplo
   >      }
   >  }
   >]  >```
-
+  
+  </details>
   
 ### Crea un itinerario / POST
 
