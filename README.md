@@ -424,9 +424,10 @@ URLs de ejemplo
   >```
   
  </details>
+ 
 ### Obtener los itinerarios por nombre,  /mane/{name} GET
 
-   <details>
+<details>
   <summary>Respuestas</summary>
   
   >| ResponseStatus | Valor | 
@@ -458,7 +459,8 @@ URLs de ejemplo
   >          "email": "lort@birt.eus"
   >      }
   >  }
-  >]  >```
+  >]  
+  >```
   
   </details>
   
