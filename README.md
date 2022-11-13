@@ -271,6 +271,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   
 ## Servicio de itinerarios /api/v0/itinerarys
 ### Obtener todos los itinerarios / GET
+---
 
  <details>
   <summary>Datos de entrada como parámetros de la request</summary>
@@ -350,6 +351,7 @@ URLs de ejemplo
   </details>
 
 ### Obtener un itinerario pasandole un id /id/{id} GET
+---
 
  <details>
   <summary>Respuestas</summary>
@@ -387,6 +389,7 @@ URLs de ejemplo
  </details>
  
 ### Obtener los itinerarios de un usuario, pasando el id del usuario /id/{id} GET
+---
 
  <details>
   <summary>Respuestas</summary>
@@ -426,6 +429,7 @@ URLs de ejemplo
  </details>
  
 ### Obtener los itinerarios por nombre,  /mane/{name} GET
+---
 
 <details>
   <summary>Respuestas</summary>
@@ -465,11 +469,15 @@ URLs de ejemplo
   </details>
   
 ### Crea un itinerario / POST
+---
 
 ### Actuliza un itinerario pasandole un id /{id} PUT
+---
 
 ### Borra un itinerario pasandole un id /{id} DELETE
+---
 
-### Borra los itinerarios de un suarios pasandole el id de usuaruio /delelteitineraryuser/{userid} DELETE
+### Borra los itinerarios de un suarios pasandole el id de usuario /delelteitineraryuser/{userid} DELETE
+---
 
 ## Servicio de localizaciones api/v0/geolocations
