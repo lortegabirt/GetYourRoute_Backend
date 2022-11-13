@@ -91,6 +91,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   > | Parámetro | Descripción                      | Obligatorio |
   > | :--------------- | :--------------- | :--------------- |
   > | page      | Página a visualizar            | No          |
+  > | size      | Número de elementos de la página            | No          |
   > | name      | Busca por nombre del usuario, se puede especificar una expresión regular  | No    |
   > | lastname  | Busca por los apellidos del usuario, se puede especificar una expresión regular | No    |
   > | email     | Busca por el correo del usuario | No    |
@@ -269,5 +270,83 @@ Pulsa `Ctrl-C` para parar la aplicación
   >http://localhost:8080/api/v0/users/6346b36111e0803c6675d54
   
 ## Servicio de itinerarios /api/v0/itinerarys
+### Obtener todos los itinerarios / GET
+
+ <details>
+  <summary>Datos de entrada como parámetros de la request</summary>
+   
+  > | Parámetro | Descripción                      | Obligatorio |
+  > | :--------------- | :--------------- | :--------------- |
+  > | page      | Página a visualizar            | No          |
+  > | size      | Número de elementos de la página            | No          |
+  > | userId    | Id del usuario  | No    |
+  > | beginDate | Fecha de inicio en UTC, formato DateTimeFormat.ISO.DATE_TIME 2022-10-14T14:29:06.612 | No    |
+  > | endDate   | Fecha fin en UTC, formato DateTimeFormat.ISO.DATE_TIME 2022-10-14T14:29:06.612 | No    |
+  > | name     | Nombre del itinerariom, se admite expresión regular | No    |
+ 
+ </details>
+
+<details> 
+  <summary>Respuestas</summary>
+  
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| OK             | 200   |
+  >| NO_CONTENT     | 404   |
+
+</details>
+
+URLs de ejemplo
+  >http://localhost:8080/api/v0/itinerarys/
+  >
+  >http://localhost:8080/api/v0/itinerarys/?page=1&size=10
+  >
+  >http://localhost:8080/api/v0/itinerarys/?page=2&size=15&beginDate=2022-10-14T14:29:06.612&endDate=2022-14-19T10:29:06.612
+  >
+  >http://localhost:8080/api/v0/itinerarys/?name=nombreItinerario
+
+<details>  
+  <summary>Datos de salida</summary>
+  
+  >```json
+  >{
+  >  "currentPage": 1,
+  >  "totalItemsPage": 2,
+  >  "totalPages": 1,
+  >  "totalItems": 2,
+  >  "content": [
+  >      {
+  >          "id": "634956123825654bfcb165ab",
+  >          "beginDate": "2022-10-14T14:29:06.612",
+  >          "endDate": "2022-10-14T14:29:06.613",
+  >          "name": "Itinerario",
+  >          "description": "Lorem ipsum dolor sit amet, consectetur.",
+  >          "idUser": "6346ad5c11e0803c6675d530",
+  >          "user": {
+  >              "id": "6346ad5c11e0803c6675d530",
+  >              "name": "lortega",
+  >              "lastName": "lortega",
+  >              "email": "lortega@birt.eus"
+  >          }
+  >      },
+  >      {
+  >          "id": "634956123825654bfcb165ac",
+  >          "beginDate": "2022-10-14T14:29:06.705",
+  >          "endDate": "2022-10-14T14:29:06.705",
+  >          "name": "Itinerario2",
+  >          "description": "descripcion2",
+  >          "idUser": "6346ad5c11e0803c6675d530",
+  >          "user": {
+  >              "id": "6346ad5c11e0803c6675d530",
+  >              "name": "lort",
+  >              "lastName": "lort",
+  >              "email": "lort@birt.eus"
+  >          }
+  >      }
+  >  ]
+  >}
+  >```
+  
+  </details>
 
 ## Servicio de localizaciones api/v0/geolocations
