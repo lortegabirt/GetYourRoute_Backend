@@ -324,9 +324,9 @@ URLs de ejemplo
   >          "idUser": "6346ad5c11e0803c6675d530",
   >          "user": {
   >              "id": "6346ad5c11e0803c6675d530",
-  >              "name": "lortega",
-  >              "lastName": "lortega",
-  >              "email": "lortega@birt.eus"
+  >              "name": "lort",
+  >              "lastName": "lort",
+  >              "email": "lort@birt.eus"
   >          }
   >      },
   >      {
