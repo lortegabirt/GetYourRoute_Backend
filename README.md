@@ -386,7 +386,7 @@ URLs de ejemplo
 
 ### Obtener los itinerarios de un usuario, pasando el id del usuario /id/{id} GET
 
-   <details>
+ <details>
   <summary>Respuestas</summary>
   
   >| ResponseStatus | Valor | 
@@ -423,6 +423,41 @@ URLs de ejemplo
   
 ### Obtener los itinerarios por nombre,  /mane/{name} GET
 
+   <details>
+  <summary>Respuestas</summary>
+  
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| OK             | 200   |
+  >| NO_CONTENT     | 404   |
+  
+ </details>
+  
+  URL de ejemplo
+  >http://localhost:8080/api/v0/itinerarys/name/Itinerario
+
+<details>
+  <summary>Datos de salida</summary>
+  
+  >```json
+  >[
+  >  {
+  >      "id": "634956123825654bfcb165ab",
+  >      "beginDate": "2022-10-14T14:29:06.612",
+  >      "endDate": "2022-10-14T14:29:06.613",
+  >      "name": "Itinerario",
+  >      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  >      "idUser": "6346ad5c11e0803c6675d530",
+  >      "user": {
+  >          "id": "6346ad5c11e0803c6675d530",
+  >          "name": "lortega",
+  >          "lastName": "lortega",
+  >          "email": "lortega@birt.eus"
+  >      }
+  >  }
+  >]  >```
+
+  
 ### Crea un itinerario / POST
 
 ### Actuliza un itinerario pasandole un id /{id} PUT
