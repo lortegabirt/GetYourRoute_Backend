@@ -580,6 +580,20 @@ URLs de ejemplo
 ### Borra un itinerario pasandole un id /{id} DELETE
 ---
 
+<details>
+  <summary>Respuestas</summary>
+  
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| NO_CONTENT     | 204   |
+  >| NOT_FOUND      | 404   |
+  
+</details>
+  
+  URL de ejemplo
+  >http://localhost:8080/api/v0/itinerarys/637273ffb171f03926a91bb7
+
+
 ### Borra los itinerarios de un suarios pasandole el id de usuario /delelteitineraryuser/{userid} DELETE
 ---
 
