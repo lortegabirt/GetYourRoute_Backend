@@ -104,7 +104,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
-  >| NO_CONTENT     | 404   |
+  >| NOT_FOUND      | 404   |
 
 </details>
   
@@ -160,7 +160,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
-  >| NO_CONTENT     | 404   |
+  >| NOT_FOUND     | 404   |
   
  </details>
   
@@ -189,7 +189,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
-  >| NO_CONTENT     | 404   |
+  >| NOT_FOUND     | 404   |
   
  </details>
   
@@ -293,7 +293,7 @@ Pulsa `Ctrl-C` para parar la aplicación
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
-  >| NO_CONTENT     | 404   |
+  >| NOT_FOUND      | 404   |
 
 </details>
 
@@ -359,7 +359,7 @@ URLs de ejemplo
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
-  >| NO_CONTENT     | 404   |
+  >| NOT_FOUND      | 404   |
   
  </details>
   
@@ -397,7 +397,7 @@ URLs de ejemplo
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
-  >| NO_CONTENT     | 404   |
+  >| NOT_FOUND      | 404   |
   
  </details>
   
@@ -437,7 +437,7 @@ URLs de ejemplo
   >| ResponseStatus | Valor | 
   >|:-------------- |:----- |
   >| OK             | 200   |
-  >| NO_CONTENT     | 404   |
+  >| NOT_FOUND      | 404   |
   
  </details>
   
@@ -524,6 +524,58 @@ URLs de ejemplo
 
 ### Actuliza un itinerario pasandole un id /{id} PUT
 ---
+ <details>
+  <summary>Datos de entrada en el body</summary>
+  
+  >```json
+  >{
+  >  "beginDate" : "2022-10-14T14:33:24.226",
+  >  "endDate" : "2022-10-18T19:18:24.226",
+  >  "name" : "Mod Itinerario3",
+  >  "description" : "Mod Desc Itinerario 3",
+  >  "user": {
+  >              "id": "6346b36111e0803c6675d541"
+  >          }
+  >}
+  >```
+  
+ </details>
+  
+ <details>
+  <summary>Respuesta</summary>
+  
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| CREATED        | 201   |
+  >| NOT_FOUND      | 404   |
+  
+  </details>
+  
+  URL de ejemplo
+  >http://localhost:8080/api/v0//itinerarys/637273ffb171f03926a91bb7
+
+<details>
+  <summary>Datos de salida</summary>
+  
+  >```json
+  >{
+  >  "id": "637273ffb171f03926a91bb7",
+  >  "beginDate": "2022-10-14T14:33:24.226",
+  >  "endDate": "2022-10-18T19:18:24.226",
+  >  "name": "Mod Itinerario3",
+  >  "description": "Mod Desc Itinerario 3",
+  >  "idUser": "6346b36111e0803c6675d541",
+  >  "user": {
+  >      "id": "6346b36111e0803c6675d541",
+  >      "name": null,
+  >      "lastName": null,
+  >      "email": null
+  >  }
+  >}
+  >```
+
+ </details> 
+
 
 ### Borra un itinerario pasandole un id /{id} DELETE
 ---
