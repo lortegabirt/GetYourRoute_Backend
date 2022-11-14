@@ -471,6 +471,57 @@ URLs de ejemplo
 ### Crea un itinerario / POST
 ---
 
+ <details>
+  <summary>Datos de entrada en el body</summary>
+  
+  >```json
+  >{
+  >  "beginDate" : "2022-10-14T14:33:24.226",
+  >  "endDate" : "2022-10-18T19:18:24.226",
+  >  "name" : "Itinerario3",
+  >  "description" : "Desc Itinerario 3",
+  >  "user": {
+  >              "id": "6346b36111e0803c6675d541"
+  >          }
+  >}
+  >```
+  
+ </details>
+  
+ <details>
+  <summary>Respuesta</summary>
+  
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| CREATED        | 201   |
+  
+  </details>
+  
+  URL de ejemplo
+  >http://localhost:8080/api/v0//itinerarys/
+
+<details>
+  <summary>Datos de salida</summary>
+  
+  >```json
+  >{
+  >  "id": "637273ffb171f03926a91bb7",
+  >  "beginDate": "2022-10-14T14:33:24.226",
+  >  "endDate": "2022-10-18T19:18:24.226",
+  >  "name": "Itinerario3",
+  >  "description": "Desc Itinerario 3",
+  >  "idUser": "6346b36111e0803c6675d541",
+  >  "user": {
+  >      "id": "6346b36111e0803c6675d541",
+  >      "name": null,
+  >      "lastName": null,
+  >      "email": null
+  >  }
+  >}
+  >```
+
+ </details> 
+
 ### Actuliza un itinerario pasandole un id /{id} PUT
 ---
 
