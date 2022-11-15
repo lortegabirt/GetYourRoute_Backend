@@ -19,7 +19,7 @@ public class PageDto<T> {
   private List<T> content = new ArrayList<>();
 
   public PageDto(Page<T> page) {
-    this.currentPage = page.getNumber() + 1;
+    this.currentPage = page.getNumber();
     this.totalItemsPage = page.getNumberOfElements();
     this.totalItems = page.getTotalElements();
     this.totalPages = page.getTotalPages();
