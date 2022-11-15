@@ -2,6 +2,7 @@ package birt.eus.getyourroutebackend.controller;
 
 import java.util.List;
 
+import birt.eus.getyourroutebackend.model.dto.PageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +21,6 @@ import birt.eus.getyourroutebackend.exceptions.UserNotFoundException;
 import birt.eus.getyourroutebackend.helper.GetYourRouteHelper;
 import birt.eus.getyourroutebackend.model.Itinerary;
 import birt.eus.getyourroutebackend.model.User;
-import birt.eus.getyourroutebackend.model.dto.PageUserDTO;
 import birt.eus.getyourroutebackend.model.dto.UserQueryParams;
 import birt.eus.getyourroutebackend.repository.ItineraryRepository;
 import birt.eus.getyourroutebackend.repository.UserRepository;
@@ -30,33 +30,32 @@ import birt.eus.getyourroutebackend.repository.UserRepository;
 @RestController
 @RequestMapping ("api/v0/users")
 public class UserController  {
-	  
+
 	@Autowired
 	ItineraryRepository itineraryRepository;
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	private GetYourRouteHelper getYourRouteHelper;
 
 	/**
 	 *  Lista todos los usuarios
-	 *  
+	 *
 	 * @return List<User>
 	 */
 	@GetMapping({"/",""})
-	public PageUserDTO index(@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, UserQueryParams userQueryParams) {
-		  Page<User> pageUsers = userRepository.findFiltered(userQueryParams.getQuery(), pageable);	
+	public PageDto<User> index(@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, UserQueryParams userQueryParams) {
+		  Page<User> pageUsers = userRepository.findFiltered(userQueryParams.getQuery(), pageable);
 		  List<User> listUsers = pageUsers.getContent();
 		  if (listUsers == null || listUsers.isEmpty()) throw new UserNotFoundException();
-		  PageUserDTO pageUserDTO = getYourRouteHelper.getPageUserDTO(pageUsers, listUsers);
-		  return pageUserDTO;
+		  return new PageDto<>(pageUsers);
 	}
-	
+
 	/**
 	 * Psandole un id obtener el usuario
-	 * 
+	 *
 	 * @param id String
 	 * @return User
 	 */
@@ -69,7 +68,7 @@ public class UserController  {
 
 	/**
 	 * Psandole un mail obtener el usuario
-	 * 
+	 *
 	 * @param id String
 	 * @return User
 	 */
@@ -82,10 +81,10 @@ public class UserController  {
 
 	/**
 	 * Actuliza un usuario, solo name, lastName y email
-	 * 
+	 *
 	 * @param itinerary Itinerary
 	 * @param id String
-	 * @return Itinerary 
+	 * @return Itinerary
 	 */
 	@PutMapping("/{id}")
 	@ResponseStatus (HttpStatus.CREATED)
@@ -97,10 +96,10 @@ public class UserController  {
 		tempUser.setEmail(user.getEmail());
 		return userRepository.save(tempUser);
 	}
-	
+
 	/**
 	 * Borra un usuario
-	 * 
+	 *
 	 * @param id String
 	 */
 	@DeleteMapping("/{id}")
