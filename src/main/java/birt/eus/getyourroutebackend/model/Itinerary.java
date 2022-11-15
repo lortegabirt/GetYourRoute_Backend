@@ -2,6 +2,7 @@ package birt.eus.getyourroutebackend.model;
 
 import java.time.LocalDateTime;
 
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,6 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Document("itineraries")
 public class Itinerary {
 
@@ -23,7 +25,7 @@ public class Itinerary {
     private String idUser;
     @DBRef
     private User user;
-	
+
     public Itinerary(LocalDateTime beginDate, LocalDateTime endDate, String name, String description, User user) {
 		super();
 		this.beginDate = beginDate;
@@ -38,5 +40,5 @@ public class Itinerary {
 	public String toString() {
 		return "Itinerary [id=" + id + ", beginDate=" + beginDate + ", endDate=" + endDate + ", name=" + name
 				+ ", description=" + description + ", idUser=" + idUser + ", user=" + user + "]";
-	}    
+	}
 }
