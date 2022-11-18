@@ -6,6 +6,7 @@ import birt.eus.getyourroutebackend.model.dto.PageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,12 +51,11 @@ public class ItineraryController  {
 	 * @return PageItineraryDTO
 	 */
 	@GetMapping({"/",""})
-	public PageDto<Itinerary> index(@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, ItineraryQueryParams itineraryQueryParams) {
-		Page<Itinerary> pageItinerarys = itineraryRepository.findFiltered(itineraryQueryParams.getQuery(), pageable);
-		List<Itinerary> listItinerarys = pageItinerarys.getContent();
-		if (listItinerarys == null || listItinerarys.isEmpty()) throw new ItineraryNotFoundException();
-		return new PageDto<>(pageItinerarys);
-	}
+    public PageDto<Itinerary> index(
+      @PageableDefault(size = Integer.MAX_VALUE, sort = {"beginDate"}, direction = Sort.Direction.DESC)
+      Pageable pageable, ItineraryQueryParams itineraryQueryParams) {
+      return new PageDto<>(itineraryRepository.findFiltered(itineraryQueryParams.getQuery(), pageable));
+    }
 
 
 	/**

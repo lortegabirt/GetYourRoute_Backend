@@ -22,7 +22,10 @@ public class ItineraryQueryParams {
       criteria.and("userId").is(userId);
     }
     if (beginDate != null && endDate != null) {
-      criteria.and("beginDate").gt(beginDate).lt(endDate);
+      criteria.andOperator(new Criteria().orOperator(
+        new Criteria("beginDate").gt(beginDate).lt(endDate),
+        new Criteria("endDate").gt(beginDate).lt(endDate)
+      ));
     }
     if (name != null) {
       criteria.and("name").regex(name, "i");
