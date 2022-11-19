@@ -963,4 +963,18 @@ URLs de ejemplo
 
  </details> 
 
-
+ ### Borra una localización pasandole su id /{id} DEL
+ ---
+ 
+<details>
+  <summary>Respuestas</summary>
+  
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| NO_CONTENT     | 204   |
+  >| NOT_FOUND      | 404   |
+  
+</details>
+  
+  URL de ejemplo
+  >http://localhost:8080/api/v0/geolocations/63782555e7e5ee0f8a753981
