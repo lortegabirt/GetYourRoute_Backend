@@ -611,3 +611,95 @@ URLs de ejemplo
 
 
 ## Servicio de localizaciones api/v0/geolocations
+
+### Obtener todas las localizaciones / GET
+---
+
+ <details>
+  <summary>Datos de entrada como parámetros de la request</summary>
+   
+  > | Parámetro | Descripción                      | Obligatorio |
+  > | :--------------- | :--------------- | :--------------- |
+  > | page      | Página a visualizar            | No          |
+  > | size      | Número de elementos de la página            | No          |
+  > | beginDate | Fecha de inicio en UTC, formato DateTimeFormat.ISO.DATE_TIME 2022-10-14T14:29:06.612 | No    |
+  > | endDate   | Fecha fin en UTC, formato DateTimeFormat.ISO.DATE_TIME 2022-10-14T14:29:06.612 | No    |
+  > | itineraryId | Id del itinerario  | No    |
+  > | userId    | Id del usuario  | No    |
+
+ </details>
+
+<details> 
+  <summary>Respuestas</summary>
+  
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| OK             | 200   |
+  >| NOT_FOUND      | 404   |
+
+</details>
+
+URLs de ejemplo
+  >http://localhost:8080/api/v0/geolocations/
+  >
+  >http://localhost:8080/api/v0/geolocations/?page=1&size=10
+  >
+  >http://localhost:8080/api/v0/geolocations/?page=2&size=15&beginDate=2022-10-14T14:29:06.612&endDate=2022-14-19T10:29:06.612
+  >
+  >http://localhost:8080/api/v0/geolocations/?userId=6346b36111e0803c6675d541
+
+<details>  
+  <summary>Datos de salida</summary>
+  
+  >```json
+  >{
+  >  "currentPage": 0,
+  >  "totalItemsPage": 3,
+  >  "totalPages": 5,
+  >  "totalItems": 13,
+  >  "content": [
+  >      {
+  >          "id": "63782555e7e5ee0f8a753981",
+  >          "timestamp": "2022-11-14T09:41:01.178",
+  >          "itineraryId": "636b4b7cbc36ff41b4c06bdb",
+  >          "userId": "6346b36111e0803c6675d541",
+  >          "location": {
+  >              "type": "Point",
+  >              "coordinates": [
+  >                  42.082716,
+  >                  -2.082716
+  >              ]
+  >          }
+  >      },
+  >      {
+  >          "id": "637824adf7d93c6235295741",
+  >          "timestamp": "2022-11-19T01:34:53.364",
+  >          "itineraryId": "637824adf7d93c623529573e",
+  >          "userId": "6346b36111e0803c6675d541",
+  >          "location": {
+  >              "type": "Point",
+  >              "coordinates": [
+  >                 42.082726,
+  >                 -2.082816
+  >              ]
+  >          }
+  >      },
+  >      {
+  >          "id": "637824adf7d93c6235295742",
+  >          "timestamp": "2022-11-19T01:34:53.439",
+  >          "itineraryId": "637824adf7d93c623529573e",
+  >          "userId": "6346b36111e0803c6675d541",
+  >          "location": {
+  >              "type": "Point",
+  >              "coordinates": [
+  >                  42.904234,
+  >                  -2.904234
+  >              ]
+  >          }
+  >      }
+  >  ]
+  >}
+  >```
+  
+  </details>
+
