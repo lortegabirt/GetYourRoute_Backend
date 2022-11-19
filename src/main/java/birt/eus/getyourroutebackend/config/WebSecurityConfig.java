@@ -38,6 +38,7 @@ public class WebSecurityConfig {
         request.antMatchers(HttpMethod.OPTIONS).permitAll();
         request.antMatchers("actuator/**").permitAll();
         request.antMatchers("/api/v0/authentication/**").permitAll();
+        request.antMatchers("/swagger-ui/**").permitAll();
         request.anyRequest().authenticated();
       }).httpBasic();
 
