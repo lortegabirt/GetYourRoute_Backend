@@ -777,7 +777,7 @@ URLs de ejemplo
   
  </details>
 
-### Obtener una localización pasandole un id de un itinerario /itineraryID/{itineraryID} GET
+### Obtener las localizaciones de un itinerario pasandole su id /itineraryID/{itineraryID} GET
 ---
 
  <details>
@@ -814,7 +814,7 @@ URLs de ejemplo
   
  </details>
 
-### Obtener una localización pasandole un id de un usuario /userID/{userID} GET
+### Obtener las localizaciones de un usuario pasandole su id /userID/{userID} GET
 ---
 
  <details>
