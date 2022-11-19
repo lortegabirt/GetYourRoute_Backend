@@ -29,7 +29,8 @@ public class WebSecurityConfig {
 
   @Bean
   @Profile("!dev")
-  protected SecurityFilterChain appSecurity(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+  protected SecurityFilterChain appSecurity(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter)
+    throws Exception {
     http.csrf().disable()
       //Each request is treated in isolation
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
@@ -38,9 +39,9 @@ public class WebSecurityConfig {
         request.antMatchers(HttpMethod.OPTIONS).permitAll();
         request.antMatchers("actuator/**").permitAll();
         request.antMatchers("/api/v0/authentication/**").permitAll();
-        request.antMatchers("/swagger-ui/**").permitAll();
+        request.antMatchers("/swagger-ui*/**", "/v3/api-docs/**").permitAll();
         request.anyRequest().authenticated();
-      }).httpBasic();
+      });
 
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -52,11 +53,8 @@ public class WebSecurityConfig {
     return email -> {
       User user = userRepository.findByEmail(email)
         .orElseThrow(() -> new UsernameNotFoundException("No user with the " + email + " found in the db"));
-      return org.springframework.security.core.userdetails.User
-        .withUsername(user.getName())
-        .password(user.getPassword())
-        .authorities(Collections.emptyList())
-        .build();
+      return org.springframework.security.core.userdetails.User.withUsername(user.getName())
+        .password(user.getPassword()).authorities(Collections.emptyList()).build();
     };
   }
 
