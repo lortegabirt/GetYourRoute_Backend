@@ -42,7 +42,7 @@ public class GeoLocationController  {
 	 *
 	 * @return PageGeoLocationDTO
 	 */
-	@GetMapping({"/",""})
+	@GetMapping
 	public PageDto<GeoLocation> index(@PageableDefault(size = Integer.MAX_VALUE, sort = {"timestamp"}) Pageable pageable, GeoLocationQueryParams geoLocationQueryParams) {
 		Page<GeoLocation> pageGeoLocations = geoLocationsRepository.findFiltered(geoLocationQueryParams.getQuery(), pageable);
 		List<GeoLocation> listGeoLocations = pageGeoLocations.getContent();
@@ -95,7 +95,7 @@ public class GeoLocationController  {
 	 * @param itinerary Itinerary
 	 * @return Itinerary
 	 */
-	@PostMapping({"/",""})
+	@PostMapping
 	@ResponseStatus (HttpStatus.CREATED)
 	public GeoLocation create(@RequestBody GeoLocation geoLocation) {
 		return geoLocationsRepository.save(geoLocation);

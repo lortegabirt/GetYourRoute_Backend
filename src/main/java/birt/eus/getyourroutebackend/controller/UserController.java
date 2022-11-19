@@ -45,7 +45,7 @@ public class UserController  {
 	 *
 	 * @return List<User>
 	 */
-	@GetMapping({"/",""})
+	@GetMapping
 	public PageDto<User> index(@PageableDefault(size = Integer.MAX_VALUE) Pageable pageable, UserQueryParams userQueryParams) {
 		  Page<User> pageUsers = userRepository.findFiltered(userQueryParams.getQuery(), pageable);
 		  List<User> listUsers = pageUsers.getContent();

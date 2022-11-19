@@ -50,7 +50,7 @@ public class ItineraryController  {
 	 *
 	 * @return PageItineraryDTO
 	 */
-	@GetMapping({"/",""})
+	@GetMapping
     public PageDto<Itinerary> index(
       @PageableDefault(size = Integer.MAX_VALUE, sort = {"beginDate"}, direction = Sort.Direction.DESC)
       Pageable pageable, ItineraryQueryParams itineraryQueryParams) {
@@ -103,7 +103,7 @@ public class ItineraryController  {
 	 * @param itinerary Itinerary
 	 * @return Itinerary
 	 */
-	@PostMapping({"/",""})
+	@PostMapping
 	@ResponseStatus (HttpStatus.CREATED)
 	public Itinerary create(@RequestBody Itinerary itinerary) {
 		return itineraryRepository.save(itinerary);
