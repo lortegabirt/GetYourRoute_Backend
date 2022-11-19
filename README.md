@@ -703,7 +703,7 @@ URLs de ejemplo
   
   </details>
 
-###Obtener una localización pasandole un id /id/{id} GET
+### Obtener una localización pasandole un id /id/{id} GET
 ---
 
  <details>
