@@ -850,5 +850,62 @@ URLs de ejemplo
   >```
   
  </details>
+ 
+ ### Crea una localización / POST
+---
+
+ <details>
+  <summary>Datos de entrada en el body</summary>
+  
+  >```json
+  >{           
+  >  "timestamp": "2022-11-14T09:41:01.178",
+  >  "itineraryId": "636b4b7cbc36ff41b4c06bdb",
+  >  "userId": "6346b36111e0803c6675d541",
+  >  "location": {
+  >      "type": "Point",
+  >      "coordinates": [
+  >          42.082716,
+  >          -2.082716
+  >      ]
+  >  }
+  >}  
+  >```
+  
+ </details>
+  
+ <details>
+  <summary>Respuesta</summary>
+  
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| CREATED        | 201   |
+  
+  </details>
+  
+  URL de ejemplo
+  >http://localhost:8080/api/v0//geolocations/
+
+<details>
+  <summary>Datos de salida</summary>
+  
+  >```json
+  >{  
+  >  "id": "63782555e7e5ee0f8a753981",
+  >  "timestamp": "2022-11-14T09:41:01.178",
+  >  "itineraryId": "636b4b7cbc36ff41b4c06bdb",
+  >  "userId": "6346b36111e0803c6675d541",
+  >  "location": {
+  >      "type": "Point",
+  >      "coordinates": [
+  >          42.082716,
+  >          -2.082716
+  >      ]
+  >  }
+  >}  
+  >```
+
+ </details> 
+
 
 
