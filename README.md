@@ -740,4 +740,115 @@ URLs de ejemplo
   
  </details>
 
+### Obtener una localización pasandole un id /id/{id} GET
+---
+
+ <details>
+  <summary>Respuestas</summary>
+  
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| OK             | 200   |
+  >| NOT_FOUND      | 404   |
+  
+ </details>
+  
+  URL de ejemplo
+  >http://localhost:8080/api/v0/geolocations/id/63782555e7e5ee0f8a753981
+
+<details>
+  <summary>Datos de salida</summary>
+  
+  >```json
+  >{
+  >  "id": "63782555e7e5ee0f8a753981",
+  >  "timestamp": "2022-11-14T09:41:01.178",
+  >  "itineraryId": "636b4b7cbc36ff41b4c06bdb",
+  >  "userId": "6346b36111e0803c6675d541",
+  >  "location": {
+  >      "type": "Point",
+  >      "coordinates": [
+  >          42.082716,
+  >          -2.082716
+  >      ]
+  >  }
+  >}
+  >```
+  
+ </details>
+
+### Obtener una localización pasandole un id de un itinerario /itineraryID/{itineraryID} GET
+---
+
+ <details>
+  <summary>Respuestas</summary>
+  
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| OK             | 200   |
+  >| NOT_FOUND      | 404   |
+  
+ </details>
+  
+  URL de ejemplo
+  >http://localhost:8080/api/v0/geolocations/itineraryID/636b4b7cbc36ff41b4c06bdb
+
+<details>
+  <summary>Datos de salida</summary>
+  
+  >```json
+  >{
+  >  "id": "63782555e7e5ee0f8a753981",
+  >  "timestamp": "2022-11-14T09:41:01.178",
+  >  "itineraryId": "636b4b7cbc36ff41b4c06bdb",
+  >  "userId": "6346b36111e0803c6675d541",
+  >  "location": {
+  >      "type": "Point",
+  >      "coordinates": [
+  >          42.082716,
+  >          -2.082716
+  >      ]
+  >  }
+  >}
+  >```
+  
+ </details>
+
+### Obtener una localización pasandole un id de un usuario /userID/{userID} GET
+---
+
+ <details>
+  <summary>Respuestas</summary>
+  
+  >| ResponseStatus | Valor | 
+  >|:-------------- |:----- |
+  >| OK             | 200   |
+  >| NOT_FOUND      | 404   |
+  
+ </details>
+  
+  URL de ejemplo
+  >http://localhost:8080/api/v0/geolocations/userID/6346b36111e0803c6675d541
+
+<details>
+  <summary>Datos de salida</summary>
+  
+  >```json
+  >{
+  >  "id": "63782555e7e5ee0f8a753981",
+  >  "timestamp": "2022-11-14T09:41:01.178",
+  >  "itineraryId": "636b4b7cbc36ff41b4c06bdb",
+  >  "userId": "6346b36111e0803c6675d541",
+  >  "location": {
+  >      "type": "Point",
+  >      "coordinates": [
+  >          42.082716,
+  >          -2.082716
+  >      ]
+  >  }
+  >}
+  >```
+  
+ </details>
+
 
