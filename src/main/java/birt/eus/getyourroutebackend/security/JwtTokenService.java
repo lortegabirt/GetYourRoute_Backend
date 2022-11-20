@@ -34,7 +34,7 @@ public class JwtTokenService {
    * @param name the authentication subject's name
    * @return raw jwt token
    */
-  public String generateToken(String subject, String name) {
+  public String generateToken(String subject, String name, String id) {
     return Jwts.builder()
       .setSubject(subject)
       .signWith(key)
@@ -43,6 +43,7 @@ public class JwtTokenService {
         .plus(12, ChronoUnit.HOURS)
         .atZone(ZoneId.systemDefault()).toInstant()))
       .addClaims(Map.of("name", name))
+      .addClaims(Map.of("id", id))
       .compact();
   }
 

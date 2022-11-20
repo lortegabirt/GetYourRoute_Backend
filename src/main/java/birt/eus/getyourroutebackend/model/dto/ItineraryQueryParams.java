@@ -19,7 +19,7 @@ public class ItineraryQueryParams {
   public Query getQuery() {
     Criteria criteria = new Criteria();
     if (userId != null) {
-      criteria.and("userId").is(userId);
+      criteria.and("idUser").is(userId);
     }
     if (beginDate != null && endDate != null) {
       criteria.andOperator(new Criteria().orOperator(

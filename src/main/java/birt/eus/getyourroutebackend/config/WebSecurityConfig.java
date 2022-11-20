@@ -2,6 +2,7 @@ package birt.eus.getyourroutebackend.config;
 
 import birt.eus.getyourroutebackend.model.User;
 import birt.eus.getyourroutebackend.repository.UserRepository;
+import birt.eus.getyourroutebackend.security.CustomUserDetails;
 import birt.eus.getyourroutebackend.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -53,8 +55,7 @@ public class WebSecurityConfig {
     return email -> {
       User user = userRepository.findByEmail(email)
         .orElseThrow(() -> new UsernameNotFoundException("No user with the " + email + " found in the db"));
-      return org.springframework.security.core.userdetails.User.withUsername(user.getName())
-        .password(user.getPassword()).authorities(Collections.emptyList()).build();
+      return new CustomUserDetails(user.getName(), user.getPassword(), Collections.emptyList(), user.getId());
     };
   }
 
