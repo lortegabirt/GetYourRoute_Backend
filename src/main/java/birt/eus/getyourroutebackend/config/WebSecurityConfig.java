@@ -1,19 +1,20 @@
 package birt.eus.getyourroutebackend.config;
 
-import birt.eus.getyourroutebackend.model.User;
-import birt.eus.getyourroutebackend.repository.UserRepository;
-import birt.eus.getyourroutebackend.security.CustomUserDetails;
-import birt.eus.getyourroutebackend.security.JwtAuthenticationFilter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -23,12 +24,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.Collections;
+import birt.eus.getyourroutebackend.converter.LocalDateTimeReadConverter;
+import birt.eus.getyourroutebackend.converter.LocalDateTimeWriteConverter;
+import birt.eus.getyourroutebackend.model.User;
+import birt.eus.getyourroutebackend.repository.UserRepository;
+import birt.eus.getyourroutebackend.security.CustomUserDetails;
+import birt.eus.getyourroutebackend.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+  private final List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
+	
   @Bean
   @Profile("!dev")
   protected SecurityFilterChain appSecurity(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter)
@@ -87,5 +95,12 @@ public class WebSecurityConfig {
       .authorizeHttpRequests().anyRequest().permitAll();
 
     return http.build();
+  }
+  
+  @Bean
+  public MongoCustomConversions customConversions() {
+        converters.add(new LocalDateTimeReadConverter());
+        converters.add(new LocalDateTimeWriteConverter());
+        return new MongoCustomConversions(converters);
   }
 }
