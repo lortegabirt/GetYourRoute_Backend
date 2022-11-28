@@ -15,6 +15,8 @@ Pulsa `Ctrl-C` para parar la aplicación
 - Iñaki Angulo Tarancon
 - Ramiro Iglesias Munitiz
 
+------
+
 ## Servicios de autenticación /api/v0/authentication
 
 ### Registrar usuario /signup POST</summary>  
