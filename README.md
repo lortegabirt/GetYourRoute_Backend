@@ -44,8 +44,8 @@ Pulsa `Ctrl-C` para parar la aplicación
    - #### Borra una localización pasandole su id /{id} DEL
 ------
 ## Servicios de autenticación /api/v0/authentication
-    ### Registrar usuario /signup POST  
-    ---
+  ### Registrar usuario /signup POST  
+  ---
     <details>
     <summary>Datos de entrada en el body</summary>
   
@@ -60,17 +60,17 @@ Pulsa `Ctrl-C` para parar la aplicación
   
     </details>
   
-    <details>
-    <summary>Respuesta</summary>
+   <details>
+   <summary>Respuesta</summary>
   
       >| ResponseStatus | Valor | 
       >|:-------------- |:----- |
       >| CREATED        | 201   |
 
-    </details>
+   </details>
   
-    URL de ejemplo
-     >http://localhost:8080/api/v0/authentication/singup/
+   URL de ejemplo
+    >http://localhost:8080/api/v0/authentication/singup/
  
 ### Obtener Token de usuario /login POST
 ---
