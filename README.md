@@ -45,7 +45,8 @@ Pulsa `Ctrl-C` para parar la aplicación
 ------
 ## Servicios de autenticación /api/v0/authentication
 
-### Registrar usuario /signup POST</summary>  
+<details>
+<summary>### Registrar usuario /signup POST</summary>  
 ---
   <details>
   <summary>Datos de entrada en el body</summary>
@@ -72,6 +73,8 @@ Pulsa `Ctrl-C` para parar la aplicación
   
   URL de ejemplo
   >http://localhost:8080/api/v0/authentication/singup/
+  
+</details>
   
 ### Obtener Token de usuario /login POST
 ---
