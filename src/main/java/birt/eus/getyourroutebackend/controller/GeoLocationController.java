@@ -1,5 +1,6 @@
 package birt.eus.getyourroutebackend.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import birt.eus.getyourroutebackend.model.dto.PageDto;
@@ -98,6 +99,9 @@ public class GeoLocationController  {
 	@PostMapping
 	@ResponseStatus (HttpStatus.CREATED)
 	public GeoLocation create(@RequestBody GeoLocation geoLocation) {
+		if (geoLocation.getTimestamp()==null) {
+			geoLocation.setTimestamp(LocalDateTime.now());
+		}
 		return geoLocationsRepository.save(geoLocation);
 	}
 
@@ -115,6 +119,11 @@ public class GeoLocationController  {
 		if (tempGeoLocation == null) throw new GeoLocationNotFoundException(id);
 		tempGeoLocation.setItineraryId(geoLocation.getItineraryId());
 		tempGeoLocation.setUserId(geoLocation.getUserId());
+		if (geoLocation.getTimestamp()!=null) {
+			tempGeoLocation.setTimestamp(geoLocation.getTimestamp());
+		} else {
+			tempGeoLocation.setTimestamp(LocalDateTime.now());
+		}
 		tempGeoLocation.setTimestamp(geoLocation.getTimestamp());
 		tempGeoLocation.setLocation(geoLocation.getLocation());
 		return geoLocationsRepository.save(tempGeoLocation);

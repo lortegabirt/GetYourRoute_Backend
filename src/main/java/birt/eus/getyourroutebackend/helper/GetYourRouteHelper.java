@@ -1,5 +1,8 @@
 package birt.eus.getyourroutebackend.helper;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -83,6 +86,17 @@ public class GetYourRouteHelper {
 		}
 	}
 
+	/**
+	 * Rettorna en eun objeto String la fecha actual en formato "yyyy-MM-dd HH:mm:ss.SSS Z"
+	 * 
+	 * @return String fecha actual en "yyyy-MM-dd HH:mm:ss.SSS Z"
+	 */
+	public String getDateTimeNowFormat() {
+		 DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS Z");
+	     ZonedDateTime zonedDateTime = ZonedDateTime.now();
+	     return fmt.format(zonedDateTime);
+	}
+	
 	public String toStringID(String id) {
 	    return String.format(
 	            "TeamID[uniqueString=%s]",
