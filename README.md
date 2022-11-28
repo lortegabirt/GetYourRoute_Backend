@@ -21,7 +21,27 @@ Pulsa `Ctrl-C` para parar la aplicación
    - #### Registrar usuario /signup POST</summary>
    - #### Obtener Token de usuario /login POST
  - ### Servicio de usuarios /api/v0/users
-   - #### Obtener todos los usuarios / GET  
+   - #### Obtener todos los usuarios / GET
+   - #### Obtener un usuario pasandole un id /id/{id} GET
+   - #### Obtener un usuario pasandole el mail /email/{email} GET
+   - #### Actualiza los datos de un usuario, solo name, lastName y email /{id} PUT
+   - #### Borra un usuario pasandole su id /{id} DEL
+ - ### Servicio de itinerarios /api/v0/itinerarys
+   - #### Obtener todos los itinerarios / GET
+   - #### Obtener un itinerario pasandole un id /id/{id} GET
+   - #### Obtener los itinerarios de un usuario, pasando el id del usuario /id/{id} GET
+   - #### Obtener los itinerarios por nombre, /mane/{name} GET
+   - #### Crea un itinerario / POST
+   - #### Actualiza un itinerario pasandole un id /{id} PUT
+   - #### Borra un itinerario pasandole un id /{id} DELETE
+ - ## Servicio de localizaciones api/v0/geolocations
+   - #### Obtener todas las localizaciones / GET
+   - #### Obtener una localización pasandole un id /id/{id} GET
+   - #### Obtener las localizaciones de un itinerario pasandole su id /itineraryID/{itineraryID} GET
+   - #### Obtener las localizaciones de un usuario pasandole su id /userID/{userID} GET
+   - #### Crea una localización / POST
+   - #### Actualiza una localización pasndole su id /{id} PUT
+   - #### Borra una localización pasandole su id /{id} DEL
 ------
 ## Servicios de autenticación /api/v0/authentication
 
@@ -436,7 +456,7 @@ URLs de ejemplo
   
  </details>
  
-### Obtener los itinerarios por nombre,  /mane/{name} GET
+### Obtener los itinerarios por nombre, /mane/{name} GET
 ---
 
 <details>
@@ -584,7 +604,6 @@ URLs de ejemplo
 
  </details> 
 
-
 ### Borra un itinerario pasandole un id /{id} DELETE
 ---
 
@@ -619,7 +638,6 @@ URLs de ejemplo
 
 
 ## Servicio de localizaciones api/v0/geolocations
-
 ### Obtener todas las localizaciones / GET
 ---
 
@@ -710,43 +728,6 @@ URLs de ejemplo
   >```
   
   </details>
-
-### Obtener una localización pasandole un id /id/{id} GET
----
-
- <details>
-  <summary>Respuestas</summary>
-  
-  >| ResponseStatus | Valor | 
-  >|:-------------- |:----- |
-  >| OK             | 200   |
-  >| NOT_FOUND      | 404   |
-  
- </details>
-  
-  URL de ejemplo
-  >http://localhost:8080/api/v0/geolocations/id/63782555e7e5ee0f8a753981
-
-<details>
-  <summary>Datos de salida</summary>
-  
-  >```json
-  >{
-  >  "id": "63782555e7e5ee0f8a753981",
-  >  "timestamp": "2022-11-14T09:41:01.178",
-  >  "itineraryId": "636b4b7cbc36ff41b4c06bdb",
-  >  "userId": "6346b36111e0803c6675d541",
-  >  "location": {
-  >      "type": "Point",
-  >      "coordinates": [
-  >          42.082716,
-  >          -2.082716
-  >      ]
-  >  }
-  >}
-  >```
-  
- </details>
 
 ### Obtener una localización pasandole un id /id/{id} GET
 ---
