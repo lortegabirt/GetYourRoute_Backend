@@ -1,10 +1,9 @@
 package birt.eus.getyourroutebackend.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-import birt.eus.getyourroutebackend.model.dto.PageDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -25,6 +24,7 @@ import birt.eus.getyourroutebackend.helper.GetYourRouteHelper;
 import birt.eus.getyourroutebackend.model.Itinerary;
 import birt.eus.getyourroutebackend.model.User;
 import birt.eus.getyourroutebackend.model.dto.ItineraryQueryParams;
+import birt.eus.getyourroutebackend.model.dto.PageDto;
 import birt.eus.getyourroutebackend.repository.ItineraryRepository;
 import birt.eus.getyourroutebackend.repository.UserRepository;
 
@@ -106,8 +106,15 @@ public class ItineraryController  {
 	@PostMapping
 	@ResponseStatus (HttpStatus.CREATED)
 	public Itinerary create(@RequestBody Itinerary itinerary) {
+		if (itinerary.getBeginDate()==null) {
+			itinerary.setBeginDate(LocalDateTime.now());
+		}
+		if (itinerary.getEndDate()==null) {
+			itinerary.setEndDate(LocalDateTime.now());
+		} 
 		return itineraryRepository.save(itinerary);
 	}
+	
 	/**
 	 * Actuliza un itinerario
 	 *
@@ -122,9 +129,53 @@ public class ItineraryController  {
 		if (tempItinerary == null) throw new ItineraryNotFoundException(id);
 		tempItinerary.setName(itinerary.getName());
 		tempItinerary.setDescription(itinerary.getDescription());
-		tempItinerary.setBeginDate(tempItinerary.getBeginDate());
-		tempItinerary.setEndDate(tempItinerary.getEndDate());
+		if (tempItinerary.getBeginDate()!=null) {
+			tempItinerary.setBeginDate(tempItinerary.getBeginDate());
+		} else {
+			tempItinerary.setBeginDate(LocalDateTime.now());
+		}
+		if (tempItinerary.getEndDate()!=null) {
+			tempItinerary.setEndDate(tempItinerary.getEndDate());
+		} else {
+			tempItinerary.setEndDate(LocalDateTime.now());
+		}
 		tempItinerary.setUser(tempItinerary.getUser());
+		return itineraryRepository.save(tempItinerary);
+	}
+
+	/**
+	 * Crea un itinerario nuevo pasando el id del usuario
+	 *
+	 * @param String userId
+	 * @return Itinerary
+	 */
+	
+	@ResponseStatus (HttpStatus.CREATED)
+	@PostMapping("/startnewitinerary/{userid}")
+	public Itinerary startNewItineraryUserId(@PathVariable("userid") String userId) {
+		User user = userRepository.findById(userId).orElse(null);
+		if (user==null) { throw new UserNotFoundException(userId); }
+		Itinerary itinerary = new Itinerary();
+		itinerary.setIdUser(userId);
+		itinerary.setBeginDate(LocalDateTime.now());
+		itinerary.setName("itinerary name - " + getYourRouteHelper.getDateTimeNowFormat());
+		itinerary.setDescription("itinerary description - " + getYourRouteHelper.getDateTimeNowFormat());
+		itinerary.setUser(user);
+		return itineraryRepository.save(itinerary);
+	}
+
+	/**
+	 * Actuliza el campo enDate con la fecha actual pasando el id del itinerario
+	 *
+	 * @param itinerary Itinerary
+	 * @return Itinerary
+	 */
+	@PutMapping("/stopitinerary/{itineraryid}")
+	@ResponseStatus (HttpStatus.CREATED)
+	public Itinerary stopItineraryUserId(@PathVariable("itineraryid") String itineraryId) {
+		Itinerary tempItinerary = itineraryRepository.findById(itineraryId).orElse(null);
+		if (tempItinerary == null) throw new ItineraryNotFoundException(itineraryId);
+		tempItinerary.setEndDate(LocalDateTime.now());
 		return itineraryRepository.save(tempItinerary);
 	}
 
