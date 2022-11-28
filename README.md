@@ -16,7 +16,13 @@ Pulsa `Ctrl-C` para parar la aplicación
 - Ramiro Iglesias Munitiz
 
 ------
-
+## Servicios REST
+ ### Servicios de autenticación /api/v0/authentication
+  #### Registrar usuario /signup POST</summary>
+  #### Obtener Token de usuario /login POST
+ ### Servicio de usuarios /api/v0/users
+  #### Obtener todos los usuarios / GET  
+------
 ## Servicios de autenticación /api/v0/authentication
 
 ### Registrar usuario /signup POST</summary>  
