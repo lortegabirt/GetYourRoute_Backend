@@ -22,4 +22,14 @@ class GeoLocationTest {
       .enable(SerializationFeature.INDENT_OUTPUT);
     System.out.println(mapper.writeValueAsString(geoLocation));
   }
+
+  @Test
+  void testItem() throws JsonProcessingException {
+    GeoLocation geoLocation = new GeoLocation();
+    LocalDateTime now = LocalDateTime.now();
+    geoLocation.setTimestamp(now);
+    String s = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(geoLocation);
+    System.out.println(s);
+  }
+
 }
