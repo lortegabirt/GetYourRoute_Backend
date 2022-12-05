@@ -11,8 +11,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PointOfInterestRepository extends MongoRepository<PointOfInterest, String> {
-  List<PointOfInterest> findByLocationNear(GeoJsonPoint point, Distance distance);
-  List<PointOfInterest> findByLocationWithin(Box box);
-  List<PointOfInterest> findByType(FeatureType type);
+public interface PointOfInterestRepository
+		extends MongoRepository<PointOfInterest, String>, PointOfInterestRepositoryCustom {
+	List<PointOfInterest> findByLocationNear(GeoJsonPoint point, Distance distance);
+
+	List<PointOfInterest> findByLocationWithin(Box box);
+
+	List<PointOfInterest> findByType(FeatureType type);
 }

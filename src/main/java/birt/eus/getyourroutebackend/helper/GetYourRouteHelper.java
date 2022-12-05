@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import birt.eus.getyourroutebackend.exceptions.PointOfInterestNotFoundParameterException;
 import birt.eus.getyourroutebackend.repository.GeoLocationRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -95,6 +96,29 @@ public class GetYourRouteHelper {
 		 DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS Z");
 	     ZonedDateTime zonedDateTime = ZonedDateTime.now();
 	     return fmt.format(zonedDateTime);
+	}
+	
+	/**
+	 * Valida los parametros de LocationNear
+	 * Lanza la excepcion PointOfInterestNotFoundParameterException
+	 * 
+	 * @param paramsLocationNear Map<String, String>
+	 */
+	public boolean validateParamsLocationNear(Map<String, String> paramsLocationNear) {
+		boolean ret = true;
+		String parameters = new String();
+		if (!paramsLocationNear.containsKey("lat")) {
+			ret = false;
+			parameters.concat("lat");
+		} else if (!paramsLocationNear.containsKey("long")) {
+			ret = false;
+			parameters.concat(" long");
+		} else if (!paramsLocationNear.containsKey("distance")) {
+			ret = false;
+			parameters.concat(" distance");
+		}
+		if (!ret) throw new PointOfInterestNotFoundParameterException(parameters);
+		return ret;
 	}
 	
 	public String toStringID(String id) {
