@@ -26,7 +26,7 @@ public class GeoLocation {
     private String itineraryId;
     private String userId;
     @JsonSerialize(using = GeoJsonPointSerializer.class)
-    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2D, name="2dGeo_index")
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2D, name="2dGeo_index_location")
     private GeoJsonPoint location;
 
     public GeoLocation(LocalDateTime timestamp, String itineraryId, String userId, GeoJsonPoint location) {

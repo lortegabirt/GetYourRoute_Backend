@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import birt.eus.getyourroutebackend.exceptions.PointOfInterestNotFoundParameterException;
 import birt.eus.getyourroutebackend.repository.GeoLocationRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -96,6 +97,56 @@ public class GetYourRouteHelper {
 	     ZonedDateTime zonedDateTime = ZonedDateTime.now();
 	     return fmt.format(zonedDateTime);
 	}
+	
+	/**
+	 * Valida los parametros de LocationNear
+	 * Lanza la excepcion PointOfInterestNotFoundParameterException
+	 * 
+	 * @param paramsLocationNear Map<String, String>
+	 */
+	public boolean validateParamsLocationNear(Map<String, String> paramsLocationNear) {
+		boolean ret = true;
+		String parameters = new String();
+		if (!paramsLocationNear.containsKey("lat")) {
+			ret = false;
+			parameters.concat("lat");
+		} else if (!paramsLocationNear.containsKey("long")) {
+			ret = false;
+			parameters.concat(" long");
+		} else if (!paramsLocationNear.containsKey("distance")) {
+			ret = false;
+			parameters.concat(" distance");
+		}
+		if (!ret) throw new PointOfInterestNotFoundParameterException(parameters);
+		return ret;
+	}
+	
+
+	/**
+	 * Valida los parametros de LocationWithin
+	 * Lanza la excepcion PointOfInterestNotFoundParameterException
+	 * 
+	 * @param paramsLocationWithin Map<String, String>
+	 */
+	public boolean validateParamsLocationWithin(Map<String, String> paramsLocationWithin) {
+		boolean ret = true;
+		String parameters = new String();
+		if (!paramsLocationWithin.containsKey("bottomLeftCoorLat")) {
+			ret = false;
+			parameters.concat("bottomLeftCoorLat");
+		} else if (!paramsLocationWithin.containsKey("bottomLeftCoorLong")) {
+			ret = false;
+			parameters.concat(" bottomLeftCoorLong");
+		} else if (!paramsLocationWithin.containsKey("upperRightCoorLat")) {
+			ret = false;
+			parameters.concat(" upperRightCoorLat");
+		} else if (!paramsLocationWithin.containsKey("upperRightCoorLong")) {
+			ret = false;
+			parameters.concat(" upperRightCoorLong");
+		}
+		if (!ret) throw new PointOfInterestNotFoundParameterException(parameters);
+		return ret;
+	}	
 	
 	public String toStringID(String id) {
 	    return String.format(
