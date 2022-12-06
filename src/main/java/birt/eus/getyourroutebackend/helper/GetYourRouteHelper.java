@@ -121,6 +121,33 @@ public class GetYourRouteHelper {
 		return ret;
 	}
 	
+
+	/**
+	 * Valida los parametros de LocationWithin
+	 * Lanza la excepcion PointOfInterestNotFoundParameterException
+	 * 
+	 * @param paramsLocationWithin Map<String, String>
+	 */
+	public boolean validateParamsLocationWithin(Map<String, String> paramsLocationWithin) {
+		boolean ret = true;
+		String parameters = new String();
+		if (!paramsLocationWithin.containsKey("bottomLeftCoorLat")) {
+			ret = false;
+			parameters.concat("bottomLeftCoorLat");
+		} else if (!paramsLocationWithin.containsKey("bottomLeftCoorLong")) {
+			ret = false;
+			parameters.concat(" bottomLeftCoorLong");
+		} else if (!paramsLocationWithin.containsKey("upperRightCoorLat")) {
+			ret = false;
+			parameters.concat(" upperRightCoorLat");
+		} else if (!paramsLocationWithin.containsKey("upperRightCoorLong")) {
+			ret = false;
+			parameters.concat(" upperRightCoorLong");
+		}
+		if (!ret) throw new PointOfInterestNotFoundParameterException(parameters);
+		return ret;
+	}	
+	
 	public String toStringID(String id) {
 	    return String.format(
 	            "TeamID[uniqueString=%s]",

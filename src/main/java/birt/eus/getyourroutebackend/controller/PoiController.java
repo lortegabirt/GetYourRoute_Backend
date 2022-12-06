@@ -5,9 +5,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.geo.Box;
 import org.springframework.data.geo.Distance;
-import org.springframework.data.geo.Metric;
 import org.springframework.data.geo.Metrics;
+import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -91,4 +92,26 @@ public class PoiController {
   	  return listPointOfInterest;
      }
 
+
+     /**
+      * Pasandole lat, long y distance obtener los puntos de interes.
+      *
+      * @param paramsLocationNear Map<String,String>
+      * @return List<PointOfInterest>
+      */
+      @GetMapping("/locationWithin/")
+      public List<PointOfInterest> showByLocationWithin(@RequestParam Map<String,String> paramsLocationNear) {
+       getYourRouteHelper.validateParamsLocationWithin(paramsLocationNear);
+       Point geoJsonPointBottomLeftCoord = new Point(Double.valueOf(paramsLocationNear.get("bottomLeftCoorLat")),
+				   									               Double.valueOf(paramsLocationNear.get("bottomLeftCoorLong")));
+       
+       Point geoJsonPointUpperRightCoord = new Point(Double.valueOf(paramsLocationNear.get("upperRightCoorLat")),
+	                                                               Double.valueOf(paramsLocationNear.get("upperRightCoorLong"))); 
+
+       Box box = new Box(geoJsonPointBottomLeftCoord, geoJsonPointUpperRightCoord);
+       List<PointOfInterest>  listPointOfInterest = pointOfInterestRepository.findByLocationWithin(box);
+   	   if(listPointOfInterest.isEmpty()) throw new PointOfInterestNotFoundException(paramsLocationNear.toString(), "LocationNear");
+   	   return listPointOfInterest;
+      }
+     
 }
