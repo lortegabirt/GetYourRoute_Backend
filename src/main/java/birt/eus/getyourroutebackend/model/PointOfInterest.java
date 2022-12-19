@@ -26,7 +26,7 @@ public class PointOfInterest {
   private FeatureType type;
   private String name;
   @JsonSerialize(using = GeoJsonPointSerializer.class)
-  @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2D, name="2dGeo_index_pointsofinterest")
+  @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE, name="2dGeo_index_pointsofinterest")
   private GeoJsonPoint location;
   private Map<String, String> properties = new HashMap<>();
 }
