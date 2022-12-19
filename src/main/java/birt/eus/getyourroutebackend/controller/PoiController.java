@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.geo.Box;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;
-import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -83,11 +82,11 @@ public class PoiController {
      */
      @GetMapping("/locationNear/")
      public List<PointOfInterest> showByLocationNear(@RequestParam Map<String,String> paramsLocationNear) {
-      getYourRouteHelper.validateParamsLocationNear(paramsLocationNear);
-      GeoJsonPoint geoJsonPoint = new GeoJsonPoint(Double.valueOf(paramsLocationNear.get("lat")),
-    		  									   Double.valueOf(paramsLocationNear.get("long"))); 
+      getYourRouteHelper.validateParamsLocationNear(paramsLocationNear);      
+      GeoJsonPoint geoJsonPoint = new GeoJsonPoint(Double.valueOf(paramsLocationNear.get("long")),
+      		  									   Double.valueOf(paramsLocationNear.get("lat")));
       Distance distance = new Distance(Double.valueOf(paramsLocationNear.get("distance")), Metrics.KILOMETERS);
-      List<PointOfInterest>  listPointOfInterest = pointOfInterestRepository.findByLocationNear(geoJsonPoint, distance);
+      List<PointOfInterest>  listPointOfInterest = pointOfInterestRepository.findByLocationNear(geoJsonPoint,distance);
   	  if(listPointOfInterest.isEmpty()) throw new PointOfInterestNotFoundException(paramsLocationNear.toString(), "LocationNear");
   	  return listPointOfInterest;
      }
@@ -102,15 +101,15 @@ public class PoiController {
       @GetMapping("/locationWithin/")
       public List<PointOfInterest> showByLocationWithin(@RequestParam Map<String,String> paramsLocationNear) {
        getYourRouteHelper.validateParamsLocationWithin(paramsLocationNear);
-       Point geoJsonPointBottomLeftCoord = new Point(Double.valueOf(paramsLocationNear.get("bottomLeftCoorLat")),
-				   									               Double.valueOf(paramsLocationNear.get("bottomLeftCoorLong")));
+       GeoJsonPoint geoJsonPointBottomLeftCoord = new GeoJsonPoint(Double.valueOf(paramsLocationNear.get("bottomLeftCoorLong")),
+				   									 Double.valueOf(paramsLocationNear.get("bottomLeftCoorLat")));
        
-       Point geoJsonPointUpperRightCoord = new Point(Double.valueOf(paramsLocationNear.get("upperRightCoorLat")),
-	                                                               Double.valueOf(paramsLocationNear.get("upperRightCoorLong"))); 
+       GeoJsonPoint geoJsonPointUpperRightCoord = new GeoJsonPoint(Double.valueOf(paramsLocationNear.get("upperRightCoorLong")),
+	                                                 Double.valueOf(paramsLocationNear.get("upperRightCoorLat"))); 
 
        Box box = new Box(geoJsonPointBottomLeftCoord, geoJsonPointUpperRightCoord);
        List<PointOfInterest>  listPointOfInterest = pointOfInterestRepository.findByLocationWithin(box);
-   	   if(listPointOfInterest.isEmpty()) throw new PointOfInterestNotFoundException(paramsLocationNear.toString(), "LocationNear");
+   	   if(listPointOfInterest.isEmpty()) throw new PointOfInterestNotFoundException(paramsLocationNear.toString(), "locationWithin");
    	   return listPointOfInterest;
       }
      

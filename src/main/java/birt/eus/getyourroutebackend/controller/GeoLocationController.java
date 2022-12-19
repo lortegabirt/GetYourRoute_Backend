@@ -3,7 +3,6 @@ package birt.eus.getyourroutebackend.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import birt.eus.getyourroutebackend.model.dto.PageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,9 +19,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import birt.eus.getyourroutebackend.exceptions.GeoLocationNotFoundException;
-import birt.eus.getyourroutebackend.helper.GetYourRouteHelper;
 import birt.eus.getyourroutebackend.model.GeoLocation;
 import birt.eus.getyourroutebackend.model.dto.GeoLocationQueryParams;
+import birt.eus.getyourroutebackend.model.dto.PageDto;
 import birt.eus.getyourroutebackend.repository.GeoLocationRepository;
 
 
@@ -32,9 +31,6 @@ public class GeoLocationController  {
 
 	@Autowired
 	GeoLocationRepository geoLocationsRepository;
-
-	@Autowired
-	private GetYourRouteHelper getYourRouteHelper;
 
 	/**
 	 *  Lista todas las localizaciones, buscando por estos filtros
