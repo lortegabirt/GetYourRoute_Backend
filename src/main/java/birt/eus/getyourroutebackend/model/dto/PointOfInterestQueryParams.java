@@ -33,13 +33,13 @@ public class PointOfInterestQueryParams {
         Circle circle = new Circle(new Point(Double.valueOf(locNearLong), Double.valueOf(locNearLat)), 
         		        		   new Distance(Double.valueOf(locNearDistance), Metrics.KILOMETERS));
         criteria.and("location").withinSphere(circle);    	 
-     }
-     if (!criteria.getCriteriaObject().containsKey("location") && bottomLeftCoorLong != null && bottomLeftCoorLat != null &&
+    }
+    if (!criteria.getCriteriaObject().containsKey("location") && bottomLeftCoorLong != null && bottomLeftCoorLat != null &&
     	 upperRightCoorLong != null && upperRightCoorLat != null) {
     	 Box box = new Box(new Point(Double.valueOf(bottomLeftCoorLong), Double.valueOf(bottomLeftCoorLat)), 
     			 		   new Point(Double.valueOf(upperRightCoorLong), Double.valueOf(upperRightCoorLat)));
     	 criteria.and("location").within(box);
-     }
+    }
     return new Query().addCriteria(criteria);
   }
 }
