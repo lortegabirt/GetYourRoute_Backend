@@ -130,16 +130,16 @@ public class ItineraryController  {
 		tempItinerary.setName(itinerary.getName());
 		tempItinerary.setDescription(itinerary.getDescription());
 		if (tempItinerary.getBeginDate()!=null) {
-			tempItinerary.setBeginDate(tempItinerary.getBeginDate());
+			tempItinerary.setBeginDate(itinerary.getBeginDate());
 		} else {
 			tempItinerary.setBeginDate(LocalDateTime.now());
 		}
 		if (tempItinerary.getEndDate()!=null) {
-			tempItinerary.setEndDate(tempItinerary.getEndDate());
+			tempItinerary.setEndDate(itinerary.getEndDate());
 		} else {
 			tempItinerary.setEndDate(LocalDateTime.now());
 		}
-		tempItinerary.setUser(tempItinerary.getUser());
+		tempItinerary.setUser(itinerary.getUser());
 		return itineraryRepository.save(tempItinerary);
 	}
 
