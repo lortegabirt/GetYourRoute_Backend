@@ -1,11 +1,8 @@
 package birt.eus.getyourroutebackend.repository;
 
-import birt.eus.getyourroutebackend.model.GeoLocation;
-import birt.eus.getyourroutebackend.model.Itinerary;
-import birt.eus.getyourroutebackend.model.dto.ItineraryQueryParams;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +11,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import birt.eus.getyourroutebackend.model.GeoLocation;
+import birt.eus.getyourroutebackend.model.Itinerary;
+import birt.eus.getyourroutebackend.model.dto.ItineraryQueryParams;
 
 @SpringBootTest
 class ItineraryRepositoryTest {
@@ -22,8 +24,9 @@ class ItineraryRepositoryTest {
   @Autowired
   private ItineraryRepository itineraryRepository;
 
-  @Autowired
-  private PointOfInterestRepository repository;
+ // @Autowired
+ // private PointOfInterestRepository repository;
+ 
   @Autowired
   private ObjectMapper objectMapper;
 
@@ -49,7 +52,7 @@ class ItineraryRepositoryTest {
   void testItem() throws JsonProcessingException {
     GeoLocation geoLocation = new GeoLocation();
     LocalDateTime now = LocalDateTime.now();
-    geoLocation.setTimestamp(now);
+    geoLocation.setTimestamp(now.toInstant(ZoneOffset.UTC));
     String s = objectMapper.writeValueAsString(geoLocation);
     System.out.println(s);
   }

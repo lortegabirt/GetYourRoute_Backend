@@ -1,6 +1,7 @@
 package birt.eus.getyourroutebackend.model;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -16,7 +17,7 @@ class GeoLocationTest {
   void testSerialization() throws JsonProcessingException {
     GeoLocation geoLocation =
       // new GeoLocation(LocalDateTime.now(), "id", "id", new Point(new Position(List.of(43D, -2D))));
-    new GeoLocation(LocalDateTime.now(), "id", "id", new GeoJsonPoint(43D, -2D));
+    new GeoLocation(LocalDateTime.now().toInstant(ZoneOffset.UTC), "id", "id", new GeoJsonPoint(43D, -2D));
     ObjectMapper mapper = new ObjectMapper()
       .registerModule(new JavaTimeModule())
       .enable(SerializationFeature.INDENT_OUTPUT);
@@ -27,7 +28,7 @@ class GeoLocationTest {
   void testItem() throws JsonProcessingException {
     GeoLocation geoLocation = new GeoLocation();
     LocalDateTime now = LocalDateTime.now();
-    geoLocation.setTimestamp(now);
+    geoLocation.setTimestamp(now.toInstant(ZoneOffset.UTC));
     String s = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(geoLocation);
     System.out.println(s);
   }

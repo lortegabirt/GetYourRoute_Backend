@@ -1,6 +1,7 @@
 package birt.eus.getyourroutebackend.controller;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +97,7 @@ public class GeoLocationController  {
 	@ResponseStatus (HttpStatus.CREATED)
 	public GeoLocation create(@RequestBody GeoLocation geoLocation) {
 		if (geoLocation.getTimestamp()==null) {
-			geoLocation.setTimestamp(LocalDateTime.now());
+			geoLocation.setTimestamp(LocalDateTime.now().toInstant(ZoneOffset.UTC));
 		}
 		return geoLocationsRepository.save(geoLocation);
 	}
@@ -118,7 +119,7 @@ public class GeoLocationController  {
 		if (geoLocation.getTimestamp()!=null) {
 			tempGeoLocation.setTimestamp(geoLocation.getTimestamp());
 		} else {
-			tempGeoLocation.setTimestamp(LocalDateTime.now());
+			tempGeoLocation.setTimestamp(LocalDateTime.now().toInstant(ZoneOffset.UTC));
 		}
 		tempGeoLocation.setTimestamp(geoLocation.getTimestamp());
 		tempGeoLocation.setLocation(geoLocation.getLocation());
