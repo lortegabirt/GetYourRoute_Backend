@@ -1,14 +1,10 @@
 package birt.eus.getyourroutebackend.config;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -24,8 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import birt.eus.getyourroutebackend.converter.LocalDateTimeReadConverter;
-import birt.eus.getyourroutebackend.converter.LocalDateTimeWriteConverter;
 import birt.eus.getyourroutebackend.model.User;
 import birt.eus.getyourroutebackend.repository.UserRepository;
 import birt.eus.getyourroutebackend.security.CustomUserDetails;
@@ -35,7 +29,7 @@ import birt.eus.getyourroutebackend.security.JwtAuthenticationFilter;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-  private final List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
+  // private final List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
 	
   @Bean
   @Profile("!dev")
@@ -96,11 +90,11 @@ public class WebSecurityConfig {
 
     return http.build();
   }
-  
+  /*
   @Bean
   public MongoCustomConversions customConversions() {
         converters.add(new LocalDateTimeReadConverter());
         converters.add(new LocalDateTimeWriteConverter());
         return new MongoCustomConversions(converters);
-  }
+  }*/
 }

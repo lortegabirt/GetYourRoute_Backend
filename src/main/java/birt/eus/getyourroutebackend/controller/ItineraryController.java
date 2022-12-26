@@ -1,6 +1,7 @@
 package birt.eus.getyourroutebackend.controller;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,10 +108,10 @@ public class ItineraryController  {
 	@ResponseStatus (HttpStatus.CREATED)
 	public Itinerary create(@RequestBody Itinerary itinerary) {
 		if (itinerary.getBeginDate()==null) {
-			itinerary.setBeginDate(LocalDateTime.now());
+			itinerary.setBeginDate(LocalDateTime.now().toInstant(ZoneOffset.UTC));
 		}
 		if (itinerary.getEndDate()==null) {
-			itinerary.setEndDate(LocalDateTime.now());
+			itinerary.setEndDate(LocalDateTime.now().toInstant(ZoneOffset.UTC));
 		} 
 		return itineraryRepository.save(itinerary);
 	}
@@ -130,14 +131,14 @@ public class ItineraryController  {
 		tempItinerary.setName(itinerary.getName());
 		tempItinerary.setDescription(itinerary.getDescription());
 		if (tempItinerary.getBeginDate()!=null) {
-			tempItinerary.setBeginDate(tempItinerary.getBeginDate());
+			tempItinerary.setBeginDate(itinerary.getBeginDate());
 		} else {
-			tempItinerary.setBeginDate(LocalDateTime.now());
+			tempItinerary.setBeginDate(LocalDateTime.now().toInstant(ZoneOffset.UTC));
 		}
 		if (tempItinerary.getEndDate()!=null) {
-			tempItinerary.setEndDate(tempItinerary.getEndDate());
+			tempItinerary.setEndDate(itinerary.getEndDate());
 		} else {
-			tempItinerary.setEndDate(LocalDateTime.now());
+			tempItinerary.setEndDate(LocalDateTime.now().toInstant(ZoneOffset.UTC));
 		}
 		tempItinerary.setUser(tempItinerary.getUser());
 		return itineraryRepository.save(tempItinerary);
@@ -157,7 +158,7 @@ public class ItineraryController  {
 		if (user==null) { throw new UserNotFoundException(userId); }
 		Itinerary itinerary = new Itinerary();
 		itinerary.setIdUser(userId);
-		itinerary.setBeginDate(LocalDateTime.now());
+		itinerary.setBeginDate(LocalDateTime.now().toInstant(ZoneOffset.UTC));
 		itinerary.setName("itinerary name - " + getYourRouteHelper.getDateTimeNowFormat());
 		itinerary.setDescription("itinerary description - " + getYourRouteHelper.getDateTimeNowFormat());
 		itinerary.setUser(user);
@@ -175,7 +176,7 @@ public class ItineraryController  {
 	public Itinerary stopItineraryUserId(@PathVariable("itineraryid") String itineraryId) {
 		Itinerary tempItinerary = itineraryRepository.findById(itineraryId).orElse(null);
 		if (tempItinerary == null) throw new ItineraryNotFoundException(itineraryId);
-		tempItinerary.setEndDate(LocalDateTime.now());
+		tempItinerary.setEndDate(LocalDateTime.now().toInstant(ZoneOffset.UTC));
 		return itineraryRepository.save(tempItinerary);
 	}
 

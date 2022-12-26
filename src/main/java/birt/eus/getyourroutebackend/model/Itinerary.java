@@ -1,13 +1,13 @@
 package birt.eus.getyourroutebackend.model;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -18,15 +18,15 @@ public class Itinerary {
 
     @Id
     private String id;
-    private LocalDateTime beginDate;
-    private LocalDateTime endDate;
+    private Instant beginDate;
+    private Instant endDate;
     private String name;
     private String description;
     private String idUser;
     @DBRef
     private User user;
 
-    public Itinerary(LocalDateTime beginDate, LocalDateTime endDate, String name, String description, User user) {
+    public Itinerary(Instant beginDate, Instant endDate, String name, String description, User user) {
 		super();
 		this.beginDate = beginDate;
 		this.endDate = endDate;

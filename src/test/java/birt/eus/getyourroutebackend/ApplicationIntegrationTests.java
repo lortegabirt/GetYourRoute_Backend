@@ -1,6 +1,7 @@
 package birt.eus.getyourroutebackend;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Random;
 
@@ -98,13 +99,13 @@ class ApplicationIntegrationTests {
 	LocalDateTime end =  LocalDateTime.now();
 	end = end.plusHours(hours);
 	log.info("### createItinerary beginDate: [{}] endDate: [{}]",begin, end);
-	Itinerary itinerary = new Itinerary(begin, end, name, description, user);
+	Itinerary itinerary = new Itinerary(begin.toInstant(ZoneOffset.UTC), end.toInstant(ZoneOffset.UTC), name, description, user);
     return itinerary;
   }
 
   private GeoLocation createGeoLocation(double latitude, double longitude, String itineraryId, String userId) {
 	  GeoJsonPoint point1 = createPoint(latitude,longitude);
-	  GeoLocation geoLocation = new GeoLocation(LocalDateTime.now(),itineraryId, userId, point1);
+	  GeoLocation geoLocation = new GeoLocation(LocalDateTime.now().toInstant(ZoneOffset.UTC), itineraryId, userId, point1);
 	  return geoLocation;
   }
   

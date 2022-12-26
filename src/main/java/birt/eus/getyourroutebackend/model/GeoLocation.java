@@ -1,8 +1,7 @@
 package birt.eus.getyourroutebackend.model;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
@@ -13,6 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import birt.eus.getyourroutebackend.model.serializer.GeoJsonPointSerializer;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -22,14 +22,14 @@ import lombok.Setter;
 public class GeoLocation {
     @Id
     private String id;
-    private LocalDateTime timestamp;
+    private Instant timestamp;
     private String itineraryId;
     private String userId;
     @JsonSerialize(using = GeoJsonPointSerializer.class)
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2D, name="2dGeo_index_location")
     private GeoJsonPoint location;
 
-    public GeoLocation(LocalDateTime timestamp, String itineraryId, String userId, GeoJsonPoint location) {
+    public GeoLocation(Instant timestamp, String itineraryId, String userId, GeoJsonPoint location) {
 		super();
 		this.timestamp = timestamp;
 		this.itineraryId = itineraryId;
