@@ -43,8 +43,8 @@ public class GeoLocationController  {
 	@GetMapping
 	public PageDto<GeoLocation> index(@PageableDefault(size = Integer.MAX_VALUE, sort = {"timestamp"}) Pageable pageable, GeoLocationQueryParams geoLocationQueryParams) {
 		Page<GeoLocation> pageGeoLocations = geoLocationsRepository.findFiltered(geoLocationQueryParams.getQuery(), pageable);
-		List<GeoLocation> listGeoLocations = pageGeoLocations.getContent();
-		if (listGeoLocations == null || listGeoLocations.isEmpty()) throw new GeoLocationNotFoundException();
+		//List<GeoLocation> listGeoLocations = pageGeoLocations.getContent();
+		//if (listGeoLocations == null || listGeoLocations.isEmpty()) throw new GeoLocationNotFoundException();
 		return new PageDto<>(pageGeoLocations);
 	}
 
